@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "project": "Momus",
+  "repository": "EndeavorEverlasting/Momus",
+  "canonical": {
+    "agent_contract": "AGENTS.md",
+    "ledger": "docs/AI_ENGINEERING_LEDGER.md",
+    "execution_plan": "docs/EXECUTION_PLAN.md",
+    "codebase_map": "harness/CODEBASE_MAP.md",
+    "workflows": "harness/WORKFLOWS.md",
+    "validator": "scripts/validate_repo.py",
+    "reports_root": "reports"
+  },
+  "source_origin": {
+    "type": "google_doc",
+    "title": "AI Engineering Ledger",
+    "imported_on": "2026-08-23",
+    "execution_authority": "repository"
+  },
+  "work_items": {
+    "prefix": "MOMUS",
+    "current_focus": [
+      "MOMUS-001",
+      "MOMUS-002",
+      "MOMUS-003"
+    ]
+  },
+  "external_dependencies": [
+    {
+      "id": "momusstudiofree-carryover",
+      "name": "MomusStudiofree / OpenCode carryover",
+      "state": "not_present_in_connected_sources",
+      "owned_by": "MOMUS-002",
+      "resolution": "Recover from the workstation/local OpenCode context before replacement implementation."
+    },
+    {
+      "id": "ai-video-generation-system",
+      "name": "Existing AI production / AI video-generation repository",
+      "state": "unresolved",
+      "owned_by": "MOMUS-003",
+      "resolution": "Identify the existing repository/path/ref and proven generation entrypoint; reuse it rather than creating a duplicate stack."
+    }
+  ],
+  "artifact_policy": {
+    "large_generated_video_binaries_in_git": false,
+    "preferred_evidence": [
+      "prompts",
+      "configuration",
+      "command metadata",
+      "safe model/provider metadata",
+      "checksums",
+      "small reference assets",
+      "durable external artifact references"
+    ]
+  },
+  "validation": {
+    "command": "python scripts/validate_repo.py",
+    "ci_workflow": ".github/workflows/validate.yml",
+    "proof_ceiling": "Repository structure, ledger contract, manifest integrity, and absence of stale template filler. Runtime/provider/video-generation behavior requires separate execution evidence."
+  }
+}
