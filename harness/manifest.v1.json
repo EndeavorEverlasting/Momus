@@ -14,6 +14,9 @@
   "validators": [
     "python scripts/validate_repo.py"
   ],
+  "ci_workflows": [
+    ".github/workflows/validate.yml"
+  ],
   "forbidden_artifacts": [
     "passwords",
     "API keys",
@@ -21,5 +24,52 @@
     ".env secret values"
   ],
   "current_sprint": "P01",
-  "current_state": "READY_FOR_P01_BROWSER_PROOF"
+  "current_state": "READY_FOR_P01_BROWSER_PROOF",
+  "runtime_contract": {
+    "application": "waoowaoo",
+    "local_url": "http://localhost:13000",
+    "authentication": "existing local test account; password stays outside Git",
+    "configuration_surface": "API Configuration / Settings UI",
+    "minimum_provider_chain": [
+      "text",
+      "image",
+      "video"
+    ],
+    "connection_gate": "three green provider/model checks",
+    "representative_project": {
+      "title": "The AI Intern Takes Corporate Speak Literally",
+      "aspect_ratio": "9:16",
+      "generation_rule": "one representative shot before batching",
+      "audio_check": "explicitly verify audio presence"
+    }
+  },
+  "proof_gates": {
+    "local_launch": "evidence_captured_reverify_in_P01",
+    "authentication": "evidence_captured_reverify_in_P01",
+    "provider_connectivity": "pending_P01",
+    "representative_shot": "pending_P02",
+    "generation_export": "pending_P02",
+    "reproducibility": "pending_P03",
+    "shared_use_hardening": "pending_P04"
+  },
+  "implementation_boundary": {
+    "momus_contains_product_source": false,
+    "local_checkout_name": "MomusStudiofree",
+    "local_checkout_binding": "unproven",
+    "required_provenance_before_source_mutation": [
+      "filesystem path",
+      "git remotes",
+      "branch/ref",
+      "HEAD SHA",
+      "dirty/untracked state"
+    ]
+  },
+  "public_source_references": [
+    {
+      "id": "waoowaoo-public-source",
+      "repository": "waooAI/waoowaoo",
+      "relationship": "reference candidate; local checkout binding not yet proven",
+      "evidence": "docs/evidence/2026-08-23-waoowaoo-public-source.md"
+    }
+  ]
 }
