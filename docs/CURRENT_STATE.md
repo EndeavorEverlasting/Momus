@@ -3,15 +3,18 @@
 **State ID:** `MOMUS-2026-08-23-LEDGER-BOOTSTRAP`  
 **Status:** `READY_FOR_P01_BROWSER_PROOF`  
 **Primary lane:** AI-video carryover / Patrick pilot  
-**Canonical plan:** `docs/AI_ENGINEERING_LEDGER.md`
+**Canonical plan:** `docs/AI_ENGINEERING_LEDGER.md`  
+**Bootstrap merge:** PR #1 -> `158b3876aff0bd577941eb2656de7b40fdd5ce7e`
 
 ## What is proven
 
-- `EndeavorEverlasting/Momus` exists and began with only a minimal README.
+- `EndeavorEverlasting/Momus` exists and the ledger/harness bootstrap is merged to `main`.
 - The human AI Engineering Ledger exists in Google Drive and records two initial milestones: Patrick's AI-video prompt-engineering plan and MomusStudiofree/OpenCode carryover.
+- The Google Drive ledger's template placeholders have been replaced with project-specific Overview, Goals, Specifications, Operating Model, and milestone content.
 - Embedded source evidence shows a local waoowaoo sign-in flow at `http://localhost:13000` using the test username `sprint1-test`.
 - Embedded OpenCode evidence records **BLOCKERS: None** at the captured handoff.
 - The same evidence records the minimum model-chain target, the representative project title, 9:16 format, one-shot-before-batching rule, and explicit audio verification.
+- Repository bootstrap validation passed before merge: `PASS: Momus harness validation (7 required artifacts, 6 sprint IDs)` and `python -m py_compile scripts/validate_repo.py` passed.
 
 ## What is not yet proven
 
@@ -28,14 +31,14 @@ Treat Momus as the coordination and evidence repository until product source is 
 
 ## Next sprint
 
-**P01 — Recover Carryover and Complete Browser Proof** in `docs/SPRINTS.md`.
+**P01 — Recover Carryover and Complete Browser Proof** — GitHub issue **#2**.
 
 ## Handoff fields to update after every sprint
 
 - timestamp
 - operator/agent
 - repo + branch + commit
-- sprint ID
+- sprint ID / issue
 - files changed
 - commands/tests run
 - artifacts/screenshots/logs produced
