@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "repository": "EndeavorEverlasting/Momus",
+  "mission": "Preserve the AI Engineering Ledger as executable, evidence-backed agent work.",
+  "entrypoints": [
+    "AGENTS.md",
+    "docs/AI_ENGINEERING_LEDGER.md",
+    "docs/CURRENT_STATE.md",
+    "docs/SPRINTS.md"
+  ],
+  "evidence_roots": [
+    "docs/evidence"
+  ],
+  "validators": [
+    "python scripts/validate_repo.py"
+  ],
+  "forbidden_artifacts": [
+    "passwords",
+    "API keys",
+    "provider tokens",
+    ".env secret values"
+  ],
+  "current_sprint": "P01",
+  "current_state": "READY_FOR_P01_BROWSER_PROOF"
+}
