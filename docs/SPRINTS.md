@@ -9,10 +9,11 @@ Each sprint is intentionally small enough that a fresh agent can execute it with
 **Forbidden scope:** product-code changes, provider credentials, destructive cleanup, claims that MomusStudiofree source is in this repository.  
 **Expected artifacts:** `AGENTS.md`, ledger, current state, sprint registry, evidence note, manifest, validator, updated README.  
 **Acceptance:** validator passes; no placeholder template text remains in tracked coordination files; branch/PR/merge evidence recorded.  
-**Status:** in progress until merged and verified.
+**Status:** complete — PR #1 merged to `main` as `158b3876aff0bd577941eb2656de7b40fdd5ce7e`; local validator and Python compile checks passed before merge.
 
 ## P01 — Recover Carryover and Complete Browser Proof
 
+**GitHub issue:** #2  
 **Lane:** local browser/runtime proof  
 **Owned scope:** verify the recorded local application is reachable; authenticate using the existing local test account; open API Configuration; configure the minimum text/image/video chain; capture three green connection checks.  
 **Forbidden scope:** committing credentials, network exposure, security-hardening changes, bulk generation, unrelated UI work.  
@@ -22,6 +23,7 @@ Each sprint is intentionally small enough that a fresh agent can execute it with
 
 ## P02 — Representative Shot and Generation/Export Proof
 
+**GitHub issue:** #3  
 **Lane:** AI-video generation  
 **Owned scope:** create **“The AI Intern Takes Corporate Speak Literally”** in **9:16**, generate exactly one representative shot before batching, verify audio presence, then prove generation/export.  
 **Forbidden scope:** batch production before the one-shot gate, unrelated creative variants, shared-network deployment.  
@@ -31,6 +33,7 @@ Each sprint is intentionally small enough that a fresh agent can execute it with
 
 ## P03 — Reproducibility Seal
 
+**GitHub issue:** #4  
 **Lane:** repeatability  
 **Owned scope:** reproduce the successful P02 flow from documented prerequisites and capture exact steps, expected timings, recoverable failures, and outputs.  
 **Forbidden scope:** architectural rewrite, security redesign, feature expansion.  
@@ -40,6 +43,7 @@ Each sprint is intentionally small enough that a fresh agent can execute it with
 
 ## P04 — Shared-Use Security Hardening
 
+**GitHub issue:** #5  
 **Lane:** runtime hardening  
 **Owned scope:** constrain local-only ports to loopback where appropriate; eliminate/override unsafe hardcoded Compose defaults; assess the unauthenticated board/media surface; document residual risk.  
 **Forbidden scope:** public deployment, unrelated auth redesign, secret disclosure.  
@@ -49,6 +53,7 @@ Each sprint is intentionally small enough that a fresh agent can execute it with
 
 ## P05 — Patrick Prompt-Engineering Pilot
 
+**GitHub issue:** #6  
 **Lane:** guided creative workflow  
 **Owned scope:** turn the proven P02/P03 workflow into a short exercise for Patrick: premise -> prompt -> one shot -> critique -> deliberate revision.  
 **Forbidden scope:** broad curriculum design, unrelated model benchmarking, mass production.  
