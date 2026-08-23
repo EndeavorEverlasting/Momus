@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the minimal Momus coordination harness."""
+"""Validate the Momus coordination harness and machine-readable execution contract."""
 
 from __future__ import annotations
 
@@ -16,7 +16,9 @@ REQUIRED_FILES = [
     "docs/CURRENT_STATE.md",
     "docs/SPRINTS.md",
     "docs/evidence/2026-08-23-momusstudiofree-carryover.md",
+    "docs/evidence/2026-08-23-waoowaoo-public-source.md",
     "harness/manifest.v1.json",
+    ".github/workflows/validate.yml",
 ]
 
 PLACEHOLDERS = [
@@ -39,6 +41,21 @@ LEDGER_HEADINGS = [
 ]
 
 SPRINT_IDS = ["P00", "P01", "P02", "P03", "P04", "P05"]
+
+EXPECTED_RUNTIME = {
+    "application": "waoowaoo",
+    "local_url": "http://localhost:13000",
+    "minimum_provider_chain": ["text", "image", "video"],
+}
+
+EXPECTED_PROJECT = {
+    "title": "The AI Intern Takes Corporate Speak Literally",
+    "aspect_ratio": "9:16",
+    "generation_rule": "one representative shot before batching",
+    "audio_check": "explicitly verify audio presence",
+}
+
+EXPECTED_PUBLIC_SOURCE = "waooAI/waoowaoo"
 
 
 def fail(message: str) -> None:
@@ -66,21 +83,81 @@ def main() -> int:
         if heading not in ledger:
             fail(f"ledger missing required heading: {heading}")
 
+    required_ledger_facts = [
+        "http://localhost:13000",
+        "The AI Intern Takes Corporate Speak Literally",
+        "9:16",
+        "three green connection checks",
+        "one representative shot before batching",
+    ]
+    for fact in required_ledger_facts:
+        if fact not in ledger:
+            fail(f"ledger lost required execution fact: {fact!r}")
+
     sprints = (ROOT / "docs/SPRINTS.md").read_text(encoding="utf-8")
     for sprint_id in SPRINT_IDS:
         if f"## {sprint_id} —" not in sprints:
             fail(f"sprint registry missing {sprint_id}")
 
     manifest_path = ROOT / "harness/manifest.v1.json"
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        fail(f"manifest is invalid JSON: {exc}")
+
     if manifest.get("schema_version") != 1:
         fail("manifest schema_version must be 1")
+    if manifest.get("repository") != "EndeavorEverlasting/Momus":
+        fail("manifest repository identity is incorrect")
     if manifest.get("current_sprint") != "P01":
         fail("manifest current_sprint must be P01")
     if manifest.get("current_state") != "READY_FOR_P01_BROWSER_PROOF":
         fail("manifest current_state does not match CURRENT_STATE")
 
-    print(f"PASS: Momus harness validation ({len(REQUIRED_FILES)} required artifacts, {len(SPRINT_IDS)} sprint IDs)")
+    for entrypoint in manifest.get("entrypoints", []):
+        if not (ROOT / entrypoint).is_file():
+            fail(f"manifest entrypoint does not exist: {entrypoint}")
+
+    for workflow in manifest.get("ci_workflows", []):
+        if not (ROOT / workflow).is_file():
+            fail(f"manifest CI workflow does not exist: {workflow}")
+
+    runtime = manifest.get("runtime_contract", {})
+    for key, expected in EXPECTED_RUNTIME.items():
+        if runtime.get(key) != expected:
+            fail(f"runtime_contract.{key} must be {expected!r}")
+
+    project = runtime.get("representative_project", {})
+    for key, expected in EXPECTED_PROJECT.items():
+        if project.get(key) != expected:
+            fail(f"runtime_contract.representative_project.{key} must be {expected!r}")
+
+    proof_gates = manifest.get("proof_gates", {})
+    expected_gate_owners = {
+        "provider_connectivity": "pending_P01",
+        "representative_shot": "pending_P02",
+        "generation_export": "pending_P02",
+        "reproducibility": "pending_P03",
+        "shared_use_hardening": "pending_P04",
+    }
+    for gate, expected in expected_gate_owners.items():
+        if proof_gates.get(gate) != expected:
+            fail(f"proof gate {gate!r} must be routed as {expected!r}")
+
+    boundary = manifest.get("implementation_boundary", {})
+    if boundary.get("momus_contains_product_source") is not False:
+        fail("manifest must not claim product source is present in Momus")
+    if boundary.get("local_checkout_binding") != "unproven":
+        fail("local MomusStudiofree binding must remain unproven until local git evidence is captured")
+
+    public_sources = manifest.get("public_source_references", [])
+    if not any(source.get("repository") == EXPECTED_PUBLIC_SOURCE for source in public_sources):
+        fail(f"manifest must preserve public source reference {EXPECTED_PUBLIC_SOURCE}")
+
+    print(
+        "PASS: Momus harness validation "
+        f"({len(REQUIRED_FILES)} required artifacts, {len(SPRINT_IDS)} sprint IDs, runtime contract sealed)"
+    )
     return 0
 
 
