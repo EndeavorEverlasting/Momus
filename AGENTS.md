@@ -1,10 +1,10 @@
 # Momus Agent Operating Contract
 
-`AGENTS.md` is the repository-wide operating contract for agents working in Momus. Read it before writing.
+`AGENTS.md` is the repository-wide operating contract for Momus. Read it before writing.
 
 ## 1. Mission
 
-Turn creative AI-engineering ideas into recoverable, testable, reusable workflows. Current scope is the AI-video work described in the canonical ledger: preserve prior work, reuse the correct existing production system, and make each sprint leave evidence the next agent can act on.
+Turn AI-video ideas and carryover work into recoverable, testable, reusable workflows. The current program is concrete: recover `MomusStudiofree` / OpenCode state, prove the local waoowaoo runtime at `http://localhost:13000`, configure the minimum text → image → video chain safely, generate one representative 9:16 shot, and use the visible prompt/output loop to teach Patrick prompt engineering.
 
 ## 2. Mandatory start order
 
@@ -18,69 +18,60 @@ Before mutation, inspect:
 6. `harness/WORKFLOWS.md`
 7. recent commits, branches, PRs, reports, and validation state
 
-Repository evidence outranks assumptions. When evidence is missing, narrow the claim and create the evidence-producing task instead of inventing an answer.
+Repository evidence outranks assumptions. When evidence is incomplete, narrow the proof claim and create the next evidence-producing action instead of guessing.
 
 ## 3. Sprint declaration
 
-Every writing sprint must state:
-
-- repository and exact branch/ref;
-- sprint/lane and mission;
-- owned scope;
-- forbidden scope;
-- expected artifacts;
-- validation command(s);
-- proof ceiling.
-
-Keep the mutation inside the declared boundary. Parallel agents use separate branches or worktrees and explicitly separate owned scope.
+Every writing sprint must state repository/ref, lane/mission, owned scope, forbidden scope, expected artifacts, validation commands, and proof ceiling. Parallel agents use separate branches/worktrees and explicit ownership.
 
 ## 4. Task selection
 
-The canonical work queue is `docs/AI_ENGINEERING_LEDGER.md`.
+The canonical queue is `docs/AI_ENGINEERING_LEDGER.md`.
 
 Choose work in this order:
 
-1. an `in_progress` item already owned by the current branch;
+1. an `in_progress` item already owned by the branch;
 2. the earliest `ready` item whose dependencies are satisfied;
-3. evidence-gathering needed to unblock a `blocked` item.
+3. evidence-gathering required to unblock a `blocked` item.
 
-Do not silently skip a higher-priority ready item because another task is more interesting. If priority should change, change the ledger deliberately and explain why.
+Do not silently skip a higher-priority ready item. Change priority in the ledger if evidence justifies a different order.
 
 ## 5. Carryover-before-rebuild rule
 
-`MomusStudiofree` is recorded as prior work performed via OpenCode, but it was not found in connected GitHub or Drive sources during repository bootstrap. Treat that as a recovery problem, not permission to recreate it from memory.
+The source ledger records prior work under `MomusStudiofree` via OpenCode and a working local waoowaoo target at `http://localhost:13000`. Public source identifies `waooAI/waoowaoo` as the upstream AI Video Studio and documents Docker access at port 13000, but the exact local workspace remote/ref/customization state is not yet proven.
 
-Before writing replacement product code:
+Before replacement, upgrade, or broad source mutation:
 
-- inspect known development roots and OpenCode state for the exact prior project/session;
-- inventory recovered source, configuration, prompts, assets, commands, and runnable state;
+- recover the exact local `MomusStudiofree` path and OpenCode/session context;
+- inspect git remote, branch, HEAD, dirty state, local changes, configs, prompts, and last known commands;
 - record evidence in `reports/carryover-inventory.md`;
-- identify what is safe to import, reference, or retire.
+- preserve separately owned or uncommitted work;
+- decide what Momus should own versus reference upstream.
 
-No fresh implementation may claim to replace the carryover until that inventory exists.
+## 6. Runtime proof gates
 
-## 6. Reuse-before-duplicate rule
+Connection, generation, export, audio, and reproducibility are separate claims.
 
-The original ledger says the Pat work should use an existing AI production / video-generation repository. That dependency is not yet resolved in connected sources.
+The current runtime sequence is:
 
-Before creating a new video-generation stack, search existing repositories, local remotes, workspaces, and project notes. When found, record its exact repository/path/ref and reusable entrypoints in `reports/video-repo-resolution.md` and update `harness/manifest.v1.json`.
+1. open `http://localhost:13000`;
+2. authenticate with the existing local test account;
+3. enter API Configuration / Settings;
+4. configure the minimum text → image → video provider chain;
+5. enter provider keys in the UI only; never commit them;
+6. prove all three connection checks green;
+7. create **“The AI Intern Takes Corporate Speak Literally”** in 9:16;
+8. generate one representative shot before batching;
+9. verify audio explicitly rather than assuming it from visual generation;
+10. record whether a clean rerun is reproducible.
 
-Do not create a duplicate authority merely to make progress look easier.
+Do not promote a lower proof gate into a higher one. Three green provider checks do not prove generation. One generated shot does not prove export, audio, or reproducibility.
 
 ## 7. Ledger contract
 
-Every actionable ledger item must have:
+Every actionable ledger item must have a stable `MOMUS-NNN` ID, state (`ready`, `in_progress`, `blocked`, `done`), objective, evidence/current truth, owned scope, acceptance criteria, dependencies, and one concrete next action.
 
-- stable `MOMUS-NNN` ID;
-- state: `ready`, `in_progress`, `blocked`, or `done`;
-- objective;
-- evidence/current truth;
-- owned scope;
-- acceptance criteria;
-- dependencies;
-- one concrete next action.
-
-A work item becomes `done` only when its acceptance criteria have evidence. Notes without an executable next action are not sprint-ready.
+A work item becomes `done` only when acceptance evidence exists. Notes without an executable next action are not sprint-ready.
 
 ## 8. Validation and proof
 
@@ -90,34 +81,23 @@ Run:
 python scripts/validate_repo.py
 ```
 
-before commit and again after any ledger, manifest, workflow, or agent-contract change. CI runs the same validator.
+before commit and after ledger, manifest, workflow, or agent-contract changes. CI runs the same validator.
 
-A green validator proves repository structure and contract consistency only. It does not prove local OpenCode recovery, third-party generation services, GPU/runtime behavior, or successful video output unless those were actually exercised and evidenced.
+Repository validation proves contract consistency only. It does not prove local source recovery, provider credentials, connection health, video generation, export, audio, LAN exposure, or reproducibility unless those were separately exercised and evidenced.
 
-## 9. Artifact discipline
+## 9. Security and network boundaries
 
-Prefer small, durable evidence:
+- Passwords, provider keys, tokens, and private secrets stay outside Git and reports.
+- Prefer UI-entered provider credentials for the current local proof path.
+- Do not expose the local app to LAN/shared use while recorded hardcoded-default or network-exposure risks remain unresolved.
+- Do not weaken authentication or bind services broadly merely to simplify a demo.
 
-- prompts and prompt revisions;
-- config and command manifests;
-- structured metadata;
-- checksums;
-- screenshots only when they add evidence;
-- links/references for large generated media.
+## 10. Artifact discipline
 
-Do not commit credentials, API keys, private tokens, personal secrets, or large video binaries by default.
+Prefer prompts, prompt revisions, safe configuration metadata, command manifests, screenshots when evidentiary, checksums, and durable references. Do not commit large generated video binaries by default.
 
-## 10. Completion and handoff
+## 11. Completion and handoff
 
-A serious sprint report must name:
-
-- completed work;
-- created/modified files;
-- validation commands and actual results;
-- skipped checks and why;
-- evidence artifacts;
-- gaps, blockers, and risks;
-- commit SHA and branch/PR state;
-- exactly one next executable action that advances the first remaining unproven state.
+A serious sprint report must name completed work, created/modified files, commands/checks and actual results, skipped checks and reasons, evidence artifacts, gaps/blockers/risks, commit SHA and branch/PR state, and exactly one next executable action that advances the first remaining unproven state.
 
 Do not claim completion from prose alone.

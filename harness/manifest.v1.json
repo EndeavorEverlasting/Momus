@@ -25,29 +25,69 @@
       "MOMUS-003"
     ]
   },
+  "runtime": {
+    "application": "waoowaoo",
+    "local_url": "http://localhost:13000",
+    "authentication": "existing local test account",
+    "provider_configuration_surface": "API Configuration / Settings UI",
+    "minimum_provider_chain": [
+      "text",
+      "image",
+      "video"
+    ],
+    "connectivity_gate": "three green provider connection checks",
+    "first_generation": {
+      "concept": "The AI Intern Takes Corporate Speak Literally",
+      "aspect_ratio": "9:16",
+      "batching_policy": "Generate one representative shot before batching."
+    }
+  },
   "external_dependencies": [
     {
       "id": "momusstudiofree-carryover",
-      "name": "MomusStudiofree / OpenCode carryover",
-      "state": "not_present_in_connected_sources",
+      "name": "MomusStudiofree / OpenCode local carryover",
+      "state": "runtime_identified_provenance_pending",
       "owned_by": "MOMUS-002",
-      "resolution": "Recover from the workstation/local OpenCode context before replacement implementation."
+      "resolution": "Recover exact local path, git remote/ref/HEAD/dirty state, OpenCode context, important files, and runtime command before source rewrite or upgrade."
     },
     {
-      "id": "ai-video-generation-system",
-      "name": "Existing AI production / AI video-generation repository",
-      "state": "unresolved",
+      "id": "waoowaoo-upstream",
+      "name": "waoowaoo AI Video Studio upstream",
+      "state": "upstream_identified_local_binding_pending",
+      "owned_by": "MOMUS-002",
+      "repository": "waooAI/waoowaoo",
+      "resolution": "Public upstream is identified; prove how the local MomusStudiofree workspace maps to upstream before treating it as a clean/current clone."
+    },
+    {
+      "id": "ai-provider-chain",
+      "name": "Text → image → video provider credentials and models",
+      "state": "configuration_proof_pending",
       "owned_by": "MOMUS-003",
-      "resolution": "Identify the existing repository/path/ref and proven generation entrypoint; reuse it rather than creating a duplicate stack."
+      "resolution": "Configure provider/model selections in the local UI with secrets kept outside Git and prove three green connection checks."
     }
   ],
+  "proof_gates": [
+    "source_provenance",
+    "runtime_access",
+    "provider_connectivity",
+    "generation",
+    "audio_export",
+    "reproducibility",
+    "lan_shared_readiness"
+  ],
+  "security": {
+    "secrets_in_git": false,
+    "provider_keys": "Enter through the local application UI only for the current proof path.",
+    "network_boundary": "Remain local-first until LAN-exposure and hardcoded-default risks are explicitly closed."
+  },
   "artifact_policy": {
     "large_generated_video_binaries_in_git": false,
     "preferred_evidence": [
       "prompts",
-      "configuration",
+      "prompt revisions",
+      "safe provider and model metadata",
       "command metadata",
-      "safe model/provider metadata",
+      "screenshots when evidentiary",
       "checksums",
       "small reference assets",
       "durable external artifact references"
@@ -56,6 +96,6 @@
   "validation": {
     "command": "python scripts/validate_repo.py",
     "ci_workflow": ".github/workflows/validate.yml",
-    "proof_ceiling": "Repository structure, ledger contract, manifest integrity, and absence of stale template filler. Runtime/provider/video-generation behavior requires separate execution evidence."
+    "proof_ceiling": "Repository structure, ledger contract, manifest integrity, and absence of stale source-template filler. Local source provenance, provider connectivity, generation, audio/export, reproducibility, and network readiness require separate execution evidence."
   }
 }

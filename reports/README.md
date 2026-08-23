@@ -6,25 +6,31 @@
 
 ### `carryover-inventory.md`
 
-Owned by MOMUS-002. Created only after local/OpenCode recovery work actually runs. It records recovered `MomusStudiofree` paths/sources, important files, git/session state, known runnable commands, assets, provenance, and preserve/import/reference/retire decisions.
+Owned by MOMUS-002. Records the exact `MomusStudiofree` local path, git remote/ref/HEAD, dirty/untracked state, relevant OpenCode/session context, important files/configs/prompts/assets, known runtime commands, and preserve/import/reference/retire decisions.
 
-### `video-repo-resolution.md`
+### `waoowaoo-runtime-proof.md`
 
-Owned by MOMUS-003. Created after the intended AI production / AI video-generation dependency is evidence-backed. It records the exact repository/path/ref, generation entrypoint, prerequisites, integration boundary, and why the selected dependency matches the original plan.
+Owned by MOMUS-003. Records local access to `http://localhost:13000`, authentication result, safe text/image/video provider and model names, and each of the three connection-check results. Provider keys and passwords never belong in this report. Generation must be called unproven until a generation actually runs.
 
 ### `pat-first-video-sprint.md`
 
-Owned by MOMUS-004. Created after an actual guided generation sprint with Pat. It records the concept, prompt lineage, safe generation metadata, result reference, review observations, and prompt-engineering lessons.
+Owned by MOMUS-005. Created after the representative shot exists and Patrick completes the critique/revision loop. Records the concept, Patrick's intent/critique, prompt lineage, safe generation metadata, visible result references, deliberate revision, audio/export findings, and achieved reproducibility ceiling.
+
+## Optional generation evidence
+
+MOMUS-004 may either append a clearly separated generation-proof section to `waoowaoo-runtime-proof.md` or create a focused `representative-shot-proof.md` when the artifact/evidence is substantial enough to deserve its own report. Do not pre-create an empty shell.
 
 ## Report rules
 
 Every report must:
 
-- name its owning `MOMUS-NNN` work item;
+- name its owning `MOMUS-NNN` item;
 - distinguish observed evidence from inference;
+- state the achieved proof gate explicitly;
 - include commands/checks actually run when relevant;
-- avoid credentials, secrets, or private tokens;
+- keep credentials, API keys, passwords, and private tokens out;
 - avoid large generated video binaries by default;
+- separate provider connectivity, generation, audio/export, reproducibility, and LAN/shared readiness claims;
 - finish with the evidence-supported next action or state transition.
 
-Do not pre-create empty report shells merely to make a work item look started. The report should appear when there is evidence to record.
+Do not create empty reports merely to make work appear started.

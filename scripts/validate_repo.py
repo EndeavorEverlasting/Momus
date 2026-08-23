@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate Momus repository harness and canonical ledger contracts."""
+"""Validate Momus repository harness and canonical execution contracts."""
 
 from __future__ import annotations
 
@@ -42,6 +42,13 @@ FORBIDDEN_LEDGER_TEXT = [
     "duis autem",
 ]
 
+REQUIRED_PLAN_FACTS = [
+    "http://localhost:13000",
+    "The AI Intern Takes Corporate Speak Literally",
+    "9:16",
+    "text model → image model → video model",
+]
+
 EXPECTED_BOOTSTRAP_ITEMS = {
     "MOMUS-001",
     "MOMUS-002",
@@ -68,6 +75,8 @@ def main() -> int:
     ledger_path = ROOT / "docs/AI_ENGINEERING_LEDGER.md"
     manifest_path = ROOT / "harness/manifest.v1.json"
 
+    ledger = ""
+    ledger_ids: set[str] = set()
     if ledger_path.is_file():
         ledger = ledger_path.read_text(encoding="utf-8")
         lowered = ledger.lower()
@@ -76,17 +85,22 @@ def main() -> int:
             if phrase in lowered:
                 fail(f"canonical ledger contains stale template text: {phrase!r}", failures)
 
+        for fact in REQUIRED_PLAN_FACTS:
+            if fact not in ledger:
+                fail(f"canonical ledger lost required concrete plan fact: {fact!r}", failures)
+
         heading_matches = list(
             re.finditer(r"^### (MOMUS-\d{3}) — .+$", ledger, flags=re.MULTILINE)
         )
         ids = [match.group(1) for match in heading_matches]
+        ledger_ids = set(ids)
 
         if not ids:
             fail("canonical ledger contains no MOMUS work items", failures)
-        if len(ids) != len(set(ids)):
+        if len(ids) != len(ledger_ids):
             fail("canonical ledger contains duplicate MOMUS work-item IDs", failures)
 
-        missing_bootstrap = EXPECTED_BOOTSTRAP_ITEMS.difference(ids)
+        missing_bootstrap = EXPECTED_BOOTSTRAP_ITEMS.difference(ledger_ids)
         if missing_bootstrap:
             fail(
                 "canonical ledger is missing bootstrap work items: "
@@ -115,9 +129,7 @@ def main() -> int:
             if not state_match:
                 fail(f"{item_id} has no parseable state", failures)
             elif state_match.group(1) not in ALLOWED_STATES:
-                fail(
-                    f"{item_id} has invalid state {state_match.group(1)!r}", failures
-                )
+                fail(f"{item_id} has invalid state {state_match.group(1)!r}", failures)
 
     manifest: dict = {}
     if manifest_path.is_file():
@@ -143,20 +155,23 @@ def main() -> int:
                 elif not (ROOT / rel).is_file():
                     fail(f"manifest canonical path does not exist: {name} -> {rel}", failures)
 
-        ledger_ids = set()
-        if ledger_path.is_file():
-            ledger_ids = set(
-                re.findall(
-                    r"^### (MOMUS-\d{3}) — .+$",
-                    ledger_path.read_text(encoding="utf-8"),
-                    flags=re.MULTILINE,
-                )
-            )
-
         focus = manifest.get("work_items", {}).get("current_focus", [])
         for item_id in focus:
             if item_id not in ledger_ids:
                 fail(f"manifest current_focus references unknown item: {item_id}", failures)
+
+        runtime = manifest.get("runtime", {})
+        if runtime.get("application") != "waoowaoo":
+            fail("manifest runtime.application must be 'waoowaoo'", failures)
+        if runtime.get("local_url") != "http://localhost:13000":
+            fail("manifest runtime.local_url must be http://localhost:13000", failures)
+        if runtime.get("minimum_provider_chain") != ["text", "image", "video"]:
+            fail("manifest minimum_provider_chain must be text -> image -> video", failures)
+        first_generation = runtime.get("first_generation", {})
+        if first_generation.get("concept") != "The AI Intern Takes Corporate Speak Literally":
+            fail("manifest first-generation concept does not match the canonical plan", failures)
+        if first_generation.get("aspect_ratio") != "9:16":
+            fail("manifest first-generation aspect ratio must be 9:16", failures)
 
         dependencies = manifest.get("external_dependencies", [])
         dependency_ids: list[str] = []
@@ -179,14 +194,22 @@ def main() -> int:
         if len(dependency_ids) != len(set(dependency_ids)):
             fail("manifest contains duplicate external dependency IDs", failures)
 
+        upstream = next(
+            (dep for dep in dependencies if dep.get("id") == "waoowaoo-upstream"),
+            None,
+        )
+        if not upstream or upstream.get("repository") != "waooAI/waoowaoo":
+            fail("manifest must register waooAI/waoowaoo as identified public upstream", failures)
+
     if failures:
         print(f"\nMomus validation FAILED with {len(failures)} issue(s).")
         return 1
 
     print("PASS: required repository harness files are present")
     print("PASS: canonical ledger has no stale source-template filler")
-    print(f"PASS: {len(EXPECTED_BOOTSTRAP_ITEMS)} bootstrap work items are registered and structured")
-    print("PASS: manifest paths, work-item references, and dependency owners are valid")
+    print("PASS: canonical runtime/generation plan facts are preserved")
+    print(f"PASS: {len(EXPECTED_BOOTSTRAP_ITEMS)} work items are registered and structured")
+    print("PASS: manifest paths, runtime, work-item references, and dependency owners are valid")
     print("Momus validation PASSED")
     return 0
 
