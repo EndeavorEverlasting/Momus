@@ -1,6 +1,6 @@
 # Current State
 
-**State ID:** `MOMUS-2026-08-25-CONTEXT-WORKSPACE-ADOPTION`  
+**State ID:** `MOMUS-2026-08-25-CONTEXT-WORKSPACE-ADOPTION`
 **Status:** `READY_FOR_P01_BROWSER_PROOF`  
 **Primary lane:** AI-video carryover / Patrick pilot  
 **Canonical plan:** `docs/AI_ENGINEERING_LEDGER.md`  
