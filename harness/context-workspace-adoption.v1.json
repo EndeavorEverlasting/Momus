@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "adoptionId": "momus.context-workspace-boundary.v1",
+  "adoptionVersion": "1.0.0",
+  "repository": "EndeavorEverlasting/Momus",
+  "role": "contextAuthority",
+  "portableContract": {
+    "donorRepository": "EndeavorEverlasting/AgentSwitchboard",
+    "pinnedCommit": "dab223c4039e5599ae99034fbcce86996c5983a3",
+    "contractPath": ".ai/harness/context-workspace-boundary.contract.json",
+    "schemaPath": ".ai/harness/schemas/context-workspace-boundary.schema.json",
+    "contractId": "agentswitchboard.context-workspace-boundary.v1",
+    "contractVersion": "1.0.0"
+  },
+  "pairedRepositories": {
+    "contextAuthority": "EndeavorEverlasting/Momus",
+    "implementationAuthority": "EndeavorEverlasting/MomusStudio"
+  },
+  "authorityMap": {
+    "projectIntentAndGoals": "EndeavorEverlasting/Momus",
+    "epicsAndSprintDefinitions": "EndeavorEverlasting/Momus",
+    "crossRepositoryArchitectureDecisions": "EndeavorEverlasting/Momus",
+    "coordinationAndEvidenceRequirements": "EndeavorEverlasting/Momus",
+    "projectLessons": "EndeavorEverlasting/Momus",
+    "sourceAndContentAssets": "EndeavorEverlasting/MomusStudio",
+    "testsAndBuildScripts": "EndeavorEverlasting/MomusStudio",
+    "runtimeConfiguration": "EndeavorEverlasting/MomusStudio",
+    "implementationDerivedStatus": "EndeavorEverlasting/MomusStudio"
+  },
+  "canonicalContextArtifacts": [
+    "docs/AI_ENGINEERING_LEDGER.md",
+    "docs/CURRENT_STATE.md",
+    "docs/SPRINTS.md",
+    "docs/evidence/"
+  ],
+  "legacyCarryover": {
+    "name": "MomusStudiofree / local waoowaoo carryover",
+    "status": "REFERENCE_ONLY_UNMAPPED",
+    "rule": "Do not treat the historical local carryover as EndeavorEverlasting/MomusStudio until filesystem path, git remotes, branch/ref, HEAD SHA, and dirty/untracked state establish the relationship."
+  },
+  "staleReferenceHandling": {
+    "missingRepository": "BLOCKED",
+    "missingOrMovedCanonicalArtifact": "UNKNOWN",
+    "authorityMismatch": "CONFLICT",
+    "twoSidedDivergence": "CONFLICT",
+    "timestampOnlyResolutionAllowed": false
+  },
+  "rejectedDuplication": [
+    "Do not copy MomusStudio source, tests, build scripts, or runtime configuration into Momus merely to centralize context.",
+    "Do not copy Momus canonical AI Engineering Ledger, sprint registry, or cross-project decision history into MomusStudio as a competing truth store.",
+    "Do not run AgentSwitchboard's donor validator remotely as Momus proof; Momus owns its adoption validator."
+  ],
+  "consumerValidator": "python scripts/validate_context_workspace.py",
+  "proofCeiling": "Static repository mapping and authority adoption only. This manifest does not prove historical MomusStudiofree provenance, MomusStudio product completeness, runtime health, provider connectivity, generation/export, or deployment."
+}
