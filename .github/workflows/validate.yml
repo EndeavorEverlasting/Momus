@@ -23,13 +23,18 @@ jobs:
         env:
           EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Compile validators
-        run: python -m py_compile scripts/validate_repo.py scripts/validate_context_workspace.py
+      - name: Parse validators without writing bytecode
+        run: |
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          for path in (Path('scripts/validate_repo.py'), Path('scripts/validate_context_workspace.py')):
+              ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
+              print(f'PASS: parsed {path}')
+          PY
       - name: Validate Momus contracts
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
         run: |
           python scripts/validate_repo.py
           python scripts/validate_context_workspace.py
