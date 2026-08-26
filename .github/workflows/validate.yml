@@ -14,13 +14,35 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: Check out exact candidate
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-      - name: Compile validator
-        run: python -m py_compile scripts/validate_repo.py
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+      - name: Verify exact candidate
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Parse validators without writing bytecode
+        run: |
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          for path in (Path('scripts/validate_repo.py'), Path('scripts/validate_context_workspace.py')):
+              ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
+              print(f'PASS: parsed {path}')
+          PY
       - name: Validate Momus contracts
-        run: python scripts/validate_repo.py
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: |
+          python scripts/validate_repo.py
+          python scripts/validate_context_workspace.py
+      - name: Check repository hygiene
+        run: |
+          if [[ -n "${GITHUB_BASE_REF:-}" ]]; then
+            git diff --check "origin/${GITHUB_BASE_REF}...HEAD"
+          else
+            git diff --check HEAD^
+          fi
+          test -z "$(git status --short)"
