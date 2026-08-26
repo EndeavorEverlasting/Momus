@@ -60,7 +60,8 @@
     "canonical_implementation_repository": "EndeavorEverlasting/MomusStudio",
     "adoption_manifest": "harness/context-workspace-adoption.v1.json",
     "local_checkout_name": "MomusStudiofree",
-    "local_checkout_binding": "REFERENCE_ONLY_UNMAPPED",
+    "local_checkout_binding": "unproven",
+    "local_checkout_disposition": "REFERENCE_ONLY_UNMAPPED",
     "required_provenance_before_source_mutation": [
       "filesystem path",
       "git remotes",
