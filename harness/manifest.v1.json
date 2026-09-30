@@ -7,7 +7,9 @@
     "docs/AI_ENGINEERING_LEDGER.md",
     "docs/CURRENT_STATE.md",
     "docs/SPRINTS.md",
-    "harness/context-workspace-adoption.v1.json"
+    "harness/context-workspace-adoption.v1.json",
+    "docs/evidence/2026-09-29-local-creator-baseline.md",
+    "creative/ai-intern/shot-001.json"
   ],
   "evidence_roots": [
     "docs/evidence"
@@ -25,8 +27,8 @@
     "provider tokens",
     ".env secret values"
   ],
-  "current_sprint": "P01",
-  "current_state": "READY_FOR_P01_BROWSER_PROOF",
+  "current_sprint": "P06",
+  "current_state": "READY_FOR_LOCAL_CREATION_BASELINE",
   "runtime_contract": {
     "application": "waoowaoo",
     "local_url": "http://localhost:13000",
@@ -52,7 +54,9 @@
     "representative_shot": "pending_P02",
     "generation_export": "pending_P02",
     "reproducibility": "pending_P03",
-    "shared_use_hardening": "pending_P04"
+    "shared_use_hardening": "pending_P04",
+    "local_creator_launch": "pending_P06",
+    "first_local_generation": "pending_P06"
   },
   "implementation_boundary": {
     "momus_contains_product_source": false,
@@ -77,5 +81,34 @@
       "relationship": "reference candidate; local checkout binding not yet proven",
       "evidence": "docs/evidence/2026-08-23-waoowaoo-public-source.md"
     }
-  ]
+  ],
+  "active_creator_baseline": {
+    "relationship": "external local runtime; reference only; not vendored into Momus",
+    "flow": [
+      "Momus creative package",
+      "SwarmUI",
+      "ComfyUI",
+      "local model",
+      "local output file"
+    ],
+    "references": [
+      {
+        "repository": "mcmonkeyprojects/SwarmUI",
+        "branch": "master",
+        "observed_commit": "dde9cb8a718830d98a1ef43b5159bd357feadc2a"
+      },
+      {
+        "repository": "Comfy-Org/ComfyUI",
+        "branch": "master",
+        "observed_commit": "ebd432a78af0607a4d72df386920362e8f6836ce"
+      },
+      {
+        "repository": "Wan-Video/Wan2.2",
+        "branch": "main",
+        "observed_commit": "1ea34ff48f87168174e12956e200b1d908b1c5ff"
+      }
+    ],
+    "creative_package": "creative/ai-intern/shot-001.json",
+    "generated_binaries_in_git": false
+  }
 }
