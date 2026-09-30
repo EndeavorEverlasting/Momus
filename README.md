@@ -1,25 +1,30 @@
 # Momus
 
-Momus is the coordination repository for AI-video engineering work, beginning with the Patrick prompt-engineering pilot and the carryover from the local `MomusStudiofree` / waoowaoo workflow.
+Momus is the creative-content and coordination repository for the AI-video program.
 
-This repository is intentionally **evidence-first**. It does not pretend that the local video application source code is already present here. Instead, it preserves the engineering ledger, current state, executable sprint boundaries, proof requirements, and handoff rules so a fresh agent can continue without rediscovering the work.
+Momus manages **creative intent**: projects, shot packages, prompts, references, acceptance criteria, and returned generation provenance. It intentionally does **not** implement the image/video inference engine.
 
-## Start here
+## Immediate creation path
 
-1. Read [`AGENTS.md`](AGENTS.md).
-2. Read [`docs/AI_ENGINEERING_LEDGER.md`](docs/AI_ENGINEERING_LEDGER.md) for the canonical plan and provenance.
-3. Read [`docs/CURRENT_STATE.md`](docs/CURRENT_STATE.md) for the live handoff point.
-4. Pick exactly one bounded sprint from [`docs/SPRINTS.md`](docs/SPRINTS.md).
-5. Review supporting evidence under [`docs/evidence/`](docs/evidence/).
-6. Run `python scripts/validate_repo.py` before handing off or merging documentation changes.
+The active baseline is:
 
-## Current program
+`Momus creative package -> SwarmUI -> ComfyUI -> local model -> local output file`
 
-The first program is a vertical proof of the AI-video workflow for Patrick:
+Start with:
 
-`idea/prompt -> authenticated local app -> API configuration -> text model -> image model -> video model -> representative 9:16 shot -> generation/export proof -> reproducibility`
+- `docs/CURRENT_STATE.md` for the live handoff point.
+- `docs/evidence/2026-09-29-local-creator-baseline.md` for the pinned external creator baseline.
+- `creative/ai-intern/shot-001.json` for the first runtime-agnostic creative package.
+- `docs/SPRINTS.md` for bounded sprint contracts.
+- `AGENTS.md` for evidence and security rules.
 
-The source ledger records a local waoowaoo instance at `http://localhost:13000`, work performed via OpenCode, and a test-account browser flow. Credentials and provider keys are **not** repository artifacts and must never be committed.
+The first active creation target remains **“The AI Intern Takes Corporate Speak Literally”** in **9:16**, with exactly one representative shot before batching.
+
+## Historical carryover
+
+Earlier work against a local `MomusStudiofree` / waoowaoo runtime is preserved as evidence. Its Git provenance is still unresolved and remains `REFERENCE_ONLY_UNMAPPED`.
+
+That historical provenance lane no longer blocks the independent local-creator baseline for making new AI content.
 
 ## Repository contract
 
@@ -27,7 +32,13 @@ The source ledger records a local waoowaoo instance at `http://localhost:13000`,
 - **Live state:** `docs/CURRENT_STATE.md`
 - **Sprint registry:** `docs/SPRINTS.md`
 - **Evidence:** `docs/evidence/`
+- **Creative packages:** `creative/`
 - **Harness manifest:** `harness/manifest.v1.json`
-- **Validation:** `scripts/validate_repo.py`
+- **Validation:** `python scripts/validate_repo.py`
 
-The Google Drive document named **AI Engineering Ledger** remains the human-readable source ledger; the Markdown ledger in this repository is the agent-executable representation.
+## Safety and storage boundaries
+
+- Never commit passwords, API keys, tokens, or secret `.env` values.
+- Do not commit model weights.
+- Do not commit generated image/video binaries.
+- Record output paths, workflow/model identifiers, seed, settings, timestamp, and audio presence as provenance instead.

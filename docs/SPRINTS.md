@@ -60,3 +60,14 @@ Each sprint is intentionally small enough that a fresh agent can execute it with
 **Expected artifacts:** compact exercise, example prompt anatomy, critique rubric, one completed iteration with evidence.  
 **Acceptance:** Patrick can explain what changed between two prompt iterations and connect the change to visible output.  
 **Status:** blocked on P02; reproducibility from P03 is preferred before repeat use.
+
+
+## P06 — Local Creator Baseline and First Creative Package
+
+**GitHub issue:** #10  
+**Lane:** immediate AI-content creation  
+**Owned scope:** keep Momus as the creative-content/context layer; record a pinned external creator baseline; create a runtime-agnostic first-shot package; route generation to an existing local creator/runtime stack; capture returned provenance without committing generated binaries.  
+**Forbidden scope:** implementing an inference engine inside Momus, vendoring ComfyUI/SwarmUI/model weights, committing generated video/image binaries, credentials, provider keys, bulk generation before one-shot proof, treating historical MomusStudiofree provenance as resolved.  
+**Expected artifacts:** pinned external-reference evidence; `creative/ai-intern/shot-001.json`; local runtime launch proof; one representative generated shot; runtime/workflow/model/seed/output-path/audio provenance.  
+**Acceptance:** Momus contains the first creative package and evidence-backed runtime baseline; local creator UI launches; exactly one representative shot is generated from the package; provenance is captured; no secret or generated binary is committed.  
+**Status:** active — coordination artifacts are established on the P06 branch; local runtime/generation proof remains pending.

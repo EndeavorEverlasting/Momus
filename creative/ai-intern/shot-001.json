@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "package_id": "ai-intern-shot-001",
+  "project": {
+    "title": "The AI Intern Takes Corporate Speak Literally",
+    "format": "short-form vertical video"
+  },
+  "shot": {
+    "id": "shot-001",
+    "aspect_ratio": "9:16",
+    "duration_seconds_target": 6,
+    "premise": "An AI intern hears a piece of corporate jargon and interprets it literally.",
+    "visual_intent": "Polished cinematic office comedy, grounded live-action look, readable physical gag, expressive reaction, clean composition for vertical viewing.",
+    "prompt": "Vertical 9:16 cinematic office comedy. A young office intern sits at a modern desk during a serious team meeting. A manager says they need to 'circle back.' The intern immediately stands, walks in a literal circle around the conference table, then returns to the same chair with complete sincerity. Coworkers freeze in confused silence. Natural office lighting, realistic people, subtle handheld camera, crisp facial expressions, restrained deadpan humor, professional contemporary workplace, believable motion, no text overlays.",
+    "negative_prompt": "illegible text, warped hands, duplicate people, extra limbs, extreme camera shake, surreal anatomy, random subtitles, logos, watermarks",
+    "audio_intent": "Deadpan office ambience; preserve room tone. Dialogue/audio generation is optional for the first visual proof but audio presence must be explicitly checked before P02 acceptance.",
+    "reference_notes": [],
+    "generation_rule": "Generate exactly one representative shot before batching variants."
+  },
+  "runtime_handoff": {
+    "preferred_frontend": "mcmonkeyprojects/SwarmUI",
+    "preferred_engine": "Comfy-Org/ComfyUI",
+    "preferred_video_model_family": "Wan-Video/Wan2.2",
+    "output_root_suggestion": "~/AI-Creations/Momus",
+    "requested_filename_stem": "ai-intern-shot-001"
+  },
+  "provenance_capture": {
+    "required_on_success": [
+      "runtime name/version or commit",
+      "workflow identifier or serialized workflow path",
+      "model/checkpoint identifier",
+      "seed",
+      "generation settings",
+      "local output path",
+      "timestamp",
+      "audio present: yes/no"
+    ],
+    "generated_output_path": null,
+    "seed": null,
+    "workflow_ref": null,
+    "model_ref": null,
+    "generated_at": null,
+    "audio_present": null
+  },
+  "secrets_policy": "Never store credentials, API keys, tokens, or secret .env values in this package."
+}
