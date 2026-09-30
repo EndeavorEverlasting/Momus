@@ -18,6 +18,8 @@ REQUIRED_FILES = [
     "docs/evidence/2026-08-23-momusstudiofree-carryover.md",
     "docs/evidence/2026-08-23-waoowaoo-public-source.md",
     "harness/manifest.v1.json",
+    "docs/evidence/2026-09-29-local-creator-baseline.md",
+    "creative/ai-intern/shot-001.json",
     ".github/workflows/validate.yml",
 ]
 
@@ -40,7 +42,7 @@ LEDGER_HEADINGS = [
     "## Provenance",
 ]
 
-SPRINT_IDS = ["P00", "P01", "P02", "P03", "P04", "P05"]
+SPRINT_IDS = ["P00", "P01", "P02", "P03", "P04", "P05", "P06"]
 
 EXPECTED_RUNTIME = {
     "application": "waoowaoo",
@@ -109,14 +111,40 @@ def main() -> int:
         fail("manifest schema_version must be 1")
     if manifest.get("repository") != "EndeavorEverlasting/Momus":
         fail("manifest repository identity is incorrect")
-    if manifest.get("current_sprint") != "P01":
-        fail("manifest current_sprint must be P01")
-    if manifest.get("current_state") != "READY_FOR_P01_BROWSER_PROOF":
+    if manifest.get("current_sprint") != "P06":
+        fail("manifest current_sprint must be P06")
+    if manifest.get("current_state") != "READY_FOR_LOCAL_CREATION_BASELINE":
         fail("manifest current_state does not match CURRENT_STATE")
 
     for entrypoint in manifest.get("entrypoints", []):
         if not (ROOT / entrypoint).is_file():
             fail(f"manifest entrypoint does not exist: {entrypoint}")
+
+    baseline = manifest.get("active_creator_baseline", {})
+    if baseline.get("creative_package") != "creative/ai-intern/shot-001.json":
+        fail("active_creator_baseline creative package is missing or incorrect")
+    if baseline.get("generated_binaries_in_git") is not False:
+        fail("generated binaries must remain outside Git")
+    expected_refs = {
+        "mcmonkeyprojects/SwarmUI",
+        "Comfy-Org/ComfyUI",
+        "Wan-Video/Wan2.2",
+    }
+    observed_refs = {item.get("repository") for item in baseline.get("references", [])}
+    if not expected_refs.issubset(observed_refs):
+        fail("active creator baseline is missing required reference repositories")
+
+    creative_path = ROOT / "creative/ai-intern/shot-001.json"
+    try:
+        creative = json.loads(creative_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        fail(f"creative package is invalid JSON: {exc}")
+    if creative.get("package_id") != "ai-intern-shot-001":
+        fail("creative package id is incorrect")
+    if creative.get("shot", {}).get("aspect_ratio") != "9:16":
+        fail("creative package must preserve 9:16 target")
+    if "exactly one representative shot" not in creative.get("shot", {}).get("generation_rule", "").lower():
+        fail("creative package must preserve one-shot-before-batching gate")
 
     for workflow in manifest.get("ci_workflows", []):
         if not (ROOT / workflow).is_file():
