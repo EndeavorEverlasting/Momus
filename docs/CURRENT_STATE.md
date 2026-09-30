@@ -14,7 +14,7 @@
 - The preferred external baseline is `SwarmUI -> ComfyUI -> local model`.
 - Reference floors observed on 2026-09-29 are recorded in `docs/evidence/2026-09-29-local-creator-baseline.md`.
 - The first runtime-agnostic creative package exists at `creative/ai-intern/shot-001.json`.
-- The historical `MomusStudiofree` / waoowaoo carryover remains preserved as `REFERENCE_ONLY_UNMAPPED`; its unresolved provenance does not block the independent P06 local-creator lane.
+- The historical `MomusStudiofree` / waoowaoo carryover remains preserved as **reference-only** evidence with status `REFERENCE_ONLY_UNMAPPED`; its unresolved provenance does not block the independent P06 local-creator lane.
 - The context-workspace adoption contract remains `harness/context-workspace-adoption.v1.json`. `EndeavorEverlasting/MomusStudio` remains the selected implementation authority for any new custom product/runtime code, while Momus owns creative/context coordination and the external local creator stack owns inference execution for P06.
 
 ## What is not yet proven
