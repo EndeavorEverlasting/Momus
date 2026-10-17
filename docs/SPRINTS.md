@@ -81,3 +81,12 @@ Each sprint is intentionally small enough that a fresh agent can execute it with
 **Proof:** standalone `MomusMediaBridge` local commit `269b1ee417546c7d94cee56f05a54f654d0223df` (not in Momus); prototype baseline `8e609f7` retained in its separate Git history had 23 focused pytest passes and 8 real HTTP cert passes. Package installation in fresh venv could not be tested here due external DNS/network restrictions. S3 was only fake-client tested; unique cloud destination IDs and persisted endpoint fingerprints are protected by negative tests. No cloud credentials used. No MomusStudio workstation evidence.
 **Status:** **local functional prototype VALIDATED; canonical product integration BLOCKED** (implementation repo is unavailable through this GitHub connection). Keep P06 as Momus's active sprint; P07 is a parallel documented boundary and does not claim P06 or the historical P01 are complete.
 **First successor action:** implementation owner restores access and verifies the actual MomusStudio checkout/remotes and storage schema before performing a non-destructive adapter integration and real provider certification.
+
+## P08 — Creator UX Readiness and Live Acceptance
+
+**Lane:** creator interface pre-cert design / fail-closed UX quality gate
+**Owned scope:** `docs/UX_READINESS.md`, `harness/ux-readiness.v1.json`, validator, harness registry and exact-head CI validation; source-grounded external design precedent.
+**Forbidden scope:** new substitute frontend, product runtime edits without proven source checkout, passwords/provider keys, generated media, destructive reconciliation, network exposure, claiming browser/device proof from static checks.
+**Expected artifacts:** tracked UX strategy with novice one-shot journey; nine-case mode/state matrix; structural and negative-control validator; conditional live-cert evidence receipt, actual browser traces and one-shot proof when source/runtime is accessible.
+**Acceptance:** structural validation on exact Git revision, then distinct operator live UX gate with screenshot/trace/device proof for supported modes; no P1/P2 UX blockers and no false live certification.
+**Status:** pre-cert acceptance contract IMPLEMENTED as a proposed Git branch artifact; real UI runtime discovery, browser/device checks and generation/export remain **BLOCKED / NOT CERTIFIED**. See `docs/UX_READINESS.md` for the full dependency-order phase map. The P06 first-shot lane remains active and independent; P08 does not redefine MomusStudio as a separate product.

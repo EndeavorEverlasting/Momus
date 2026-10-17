@@ -73,3 +73,13 @@ On Patrick's local machine:
 **Additional proven invariant:** reused S3 provider IDs cannot silently change bucket/endpoint/region; negative cases reject this configuration. The HTTP cert preserves a fingerprint of implementation/launcher inputs.\n\n**Unproven:** installation and functionality on the operator's Linux Mint PC; live Backblaze B2/R2/MinIO credentials, durability, cloud upload/retrieval, actual automatic backups, and interoperability with MomusStudio/waoowaoo. Cloud storage account creation and any spending were deliberately avoided. System interpreter local cert was proven; fresh-venv dependency download was blocked by sandbox network restrictions.
 
 **Historic implementation boundary:** The prior split between the Momus and MomusStudio names was superseded as a product distinction by the creator's 2026-10-17 decision. Any old checkout still requires Git provenance checks before import or mutation; the current harness sprint does not add product code. See `docs/AI_ENGINEERING_LEDGER.md` (Media Storage Boundary) and `docs/SPRINTS.md` (P07) for acceptance and dependency-order continuation. P06 remains active and unchanged.
+
+## Creator UX pre-live-cert gate — 2026-10-17
+
+**Scope:** P08, a parallel creator-interface acceptance lane that does not supersede active P06 or imply that MomusStudio is a second product. **Status:** UX strategy and structural readiness-gate code tracked in the P08 Git branch; the live creative interface itself is **NOT CERTIFIED**.
+
+**Observed repository limitation:** at the 2026-10-17 main evidence floor `b6149a50b999f490c4d5b9ba5c6da63ed54990f5`, no runnable first-party Momus UI source, browser-launch target, or current machine installation was present in the accessible repository. The separately named historic local source and localhost route remain unverified.
+
+**Canonical acceptance:** `docs/UX_READINESS.md`, `harness/ux-readiness.v1.json`, `python scripts/validate_ux_readiness.py --self-test`. Only actual browser/device checks with exact candidate and generated-shot/export proof can promote live UX readiness. The structural validator explicitly prints `NOT CERTIFIED` without receipts; even passing receipt syntax requires independent inspection of screenshots, browser traces and device observations.
+
+**Next gate:** local implementation owner first resolves the exact known-good app checkout with `git status --short && git remote -v && git branch --show-current && git rev-parse HEAD`, without resetting or cloning over existing work; then launch the verified local app and execute the one-shot creator journey with real browser instrumentation. No credentials, model weights, media binaries or private logs should be added to Git.

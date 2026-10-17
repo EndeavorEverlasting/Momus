@@ -50,6 +50,22 @@
       "generated_by": "verified operator-state synthesis",
       "validate": "python scripts/validate_harness.py",
       "tracked": true
+    },
+    {
+      "id": "ux_readiness_plan",
+      "path": "docs/UX_READINESS.md",
+      "owner": "P08 UX readiness",
+      "generated_by": "bounded founder-authorized pre-cert UX design",
+      "validate": "python scripts/validate_ux_readiness.py --self-test",
+      "tracked": true
+    },
+    {
+      "id": "ux_readiness_contract",
+      "path": "harness/ux-readiness.v1.json",
+      "owner": "P08 UX readiness",
+      "generated_by": "bounded UX acceptance contract change",
+      "validate": "python scripts/validate_ux_readiness.py --self-test",
+      "tracked": true
     }
   ],
   "forbidden_generated_artifacts": [
