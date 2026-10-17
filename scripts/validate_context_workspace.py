@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
+"""Validate the founder-corrected Momus identity and historical context adoption."""
+
+from __future__ import annotations
+
 import json
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ADOPTION_PATH = ROOT / "harness/context-workspace-adoption.v1.json"
 
 
-def require(condition: bool, message: str):
+def require(condition: bool, message: str) -> None:
     if not condition:
         raise AssertionError(message)
 
@@ -16,80 +19,62 @@ def read(path: str) -> str:
     return (ROOT / path).read_text(encoding="utf-8-sig")
 
 
-adoption = json.loads(ADOPTION_PATH.read_text(encoding="utf-8-sig"))
-require(adoption["schemaVersion"] == 1, "schemaVersion must be 1")
-require(adoption["adoptionId"] == "momus.context-workspace-boundary.v1", "unexpected adoption id")
-require(adoption["adoptionVersion"] == "1.0.0", "unexpected adoption version")
-require(adoption["repository"] == "EndeavorEverlasting/Momus", "unexpected repository")
-require(adoption["role"] == "contextAuthority", "Momus must remain the context authority")
+def main() -> None:
+    adoption = json.loads(read("harness/context-workspace-adoption.v1.json"))
+    require(adoption["schemaVersion"] == 1, "schemaVersion must be 1")
+    require(adoption["repository"] == "EndeavorEverlasting/Momus", "wrong repository")
+    require(adoption["role"] == "unifiedProduct", "historical ownership split must be retired")
+    identity = adoption["projectIdentity"]
+    require(identity["canonicalProduct"] == "Momus", "product name changed")
+    require(identity["aliases"] == ["MomusStudio"], "MomusStudio must remain an alias")
+    require(identity["canonicalRepository"] == "EndeavorEverlasting/Momus", "canonical repo changed")
+    require(identity["sameIntendedProduct"] is True, "do not invent two products")
+    require(identity["sourceOfTruth"] == "AGENTS.md", "root governance is required")
+    require(identity["gitHistoryEquivalence"] == "UNVERIFIED", "cannot infer identical Git histories")
+    require("pairedRepositories" not in adoption and "authorityMap" not in adoption,
+            "active two-repository ownership map is forbidden")
 
-portable = adoption["portableContract"]
-require(portable["donorRepository"] == "EndeavorEverlasting/AgentSwitchboard", "unexpected donor")
-require(re.fullmatch(r"[0-9a-f]{40}", portable["pinnedCommit"]) is not None, "donor commit must be pinned")
-require(portable["pinnedCommit"] == "dab223c4039e5599ae99034fbcce86996c5983a3", "donor floor moved without an adoption review")
-require(portable["contractPath"] == ".ai/harness/context-workspace-boundary.contract.json", "contract path changed")
-require(portable["schemaPath"] == ".ai/harness/schemas/context-workspace-boundary.schema.json", "schema path changed")
-require(portable["contractId"] == "agentswitchboard.context-workspace-boundary.v1", "contract id changed")
-require(portable["contractVersion"] == "1.0.0", "contract version changed")
+    portable = adoption["portableContract"]
+    require(portable["donorRepository"] == "EndeavorEverlasting/AgentSwitchboard", "donor evidence lost")
+    require(re.fullmatch(r"[0-9a-f]{40}", portable["pinnedCommit"]) is not None, "unpinned donor")
+    require(portable["pinnedCommit"] == "dab223c4039e5599ae99034fbcce86996c5983a3",
+            "donor floor changed without review")
+    require(portable["contractId"] == "agentswitchboard.context-workspace-boundary.v1",
+            "historical contract ID lost")
 
-paired = adoption["pairedRepositories"]
-require(paired == {
-    "contextAuthority": "EndeavorEverlasting/Momus",
-    "implementationAuthority": "EndeavorEverlasting/MomusStudio",
-}, "paired repository authority changed")
+    history = adoption["historicalPairedRepositories"]
+    require(history == {
+        "contextAuthority": "EndeavorEverlasting/Momus",
+        "implementationAuthority": "EndeavorEverlasting/MomusStudio",
+    }, "historical adoption evidence must be preserved, not enforced")
+    require("historicalAuthorityMap" in adoption, "retired historic map missing")
+    carryover = adoption["legacyCarryover"]
+    require(carryover["status"] == "REFERENCE_ONLY_UNMAPPED", "unverified Git carryover was promoted")
+    for word in ("filesystem path", "git remotes", "branch/ref", "HEAD SHA", "dirty/untracked state"):
+        require(word.lower() in carryover["rule"].lower(), f"missing provenance gate: {word}")
 
-expected_context = {
-    "projectIntentAndGoals",
-    "epicsAndSprintDefinitions",
-    "crossRepositoryArchitectureDecisions",
-    "coordinationAndEvidenceRequirements",
-    "projectLessons",
-}
-expected_implementation = {
-    "sourceAndContentAssets",
-    "testsAndBuildScripts",
-    "runtimeConfiguration",
-    "implementationDerivedStatus",
-}
-for key in expected_context:
-    require(adoption["authorityMap"].get(key) == "EndeavorEverlasting/Momus", f"Momus authority changed: {key}")
-for key in expected_implementation:
-    require(adoption["authorityMap"].get(key) == "EndeavorEverlasting/MomusStudio", f"MomusStudio authority changed: {key}")
+    agents = read("AGENTS.md")
+    require("MomusStudio is not a separate product" in agents, "creator rule missing")
+    require("harness/context-workspace-adoption.v1.json" in agents,
+            "root contract must index historical adoption")
+    manifest = json.loads(read("harness/manifest.v1.json"))
+    require(manifest["project_identity"]["same_intended_product"] is True,
+            "manifest product identity drift")
+    require(manifest["implementation_boundary"]["canonical_implementation_repository"]
+            == "EndeavorEverlasting/Momus", "stale implementation routing")
+    require(manifest["implementation_boundary"]["product_owner_split"] == "SUPERSEDED",
+            "historic owner split reactivated")
+    require("harness/context-workspace-adoption.v1.json" in manifest["entrypoints"],
+            "context adoption not indexed")
+    require("python scripts/validate_context_workspace.py" in manifest["validators"],
+            "consumer validator not indexed")
+    workflow = read(".github/workflows/validate.yml")
+    require("python scripts/validate_context_workspace.py" in workflow,
+            "CI must run context validator")
+    require("EXPECTED_SHA" in workflow and "git rev-parse HEAD" in workflow,
+            "exact-head CI proof removed")
+    print("PASS: Momus single-product identity and historical provenance separation")
 
-legacy = adoption["legacyCarryover"]
-require(legacy["status"] == "REFERENCE_ONLY_UNMAPPED", "legacy carryover must remain unmapped until Git provenance is captured")
-for field in ("filesystem path", "git remotes", "branch/ref", "HEAD SHA", "dirty/untracked state"):
-    require(field.lower() in legacy["rule"].lower(), f"legacy provenance gate missing: {field}")
 
-stale = adoption["staleReferenceHandling"]
-require(stale["timestampOnlyResolutionAllowed"] is False, "timestamp-only conflict resolution is forbidden")
-require(stale["authorityMismatch"] == "CONFLICT", "authority mismatch must fail closed")
-require(stale["twoSidedDivergence"] == "CONFLICT", "two-sided divergence must fail closed")
-require(adoption["consumerValidator"] == "python scripts/validate_context_workspace.py", "consumer validator identity changed")
-require(len(adoption["rejectedDuplication"]) >= 3, "duplication boundaries missing")
-
-agents = read("AGENTS.md")
-current = read("docs/CURRENT_STATE.md")
-sprints = read("docs/SPRINTS.md")
-manifest = json.loads(read("harness/manifest.v1.json"))
-workflow = read(".github/workflows/validate.yml")
-
-for token in (
-    "EndeavorEverlasting/MomusStudio",
-    "context authority",
-    "implementation authority",
-    "REFERENCE_ONLY_UNMAPPED",
-    "harness/context-workspace-adoption.v1.json",
-):
-    require(token.lower() in agents.lower(), f"AGENTS.md boundary token missing: {token}")
-
-require("EndeavorEverlasting/MomusStudio" in current, "CURRENT_STATE must record the selected implementation authority")
-require("reference-only" in current.lower() and "MomusStudiofree" in current, "CURRENT_STATE must preserve legacy carryover uncertainty")
-require("EndeavorEverlasting/MomusStudio" in sprints, "SPRINTS must route implementation work to MomusStudio")
-require("MomusStudiofree" in sprints and "provenance" in sprints.lower(), "SPRINTS must retain the legacy provenance gate")
-require("harness/context-workspace-adoption.v1.json" in manifest.get("entrypoints", []), "harness manifest must register adoption manifest")
-require("python scripts/validate_context_workspace.py" in manifest.get("validators", []), "harness manifest must register consumer validator")
-require("python scripts/validate_context_workspace.py" in workflow, "CI must run consumer context validator")
-require("EXPECTED_SHA" in workflow and "git rev-parse HEAD" in workflow, "CI must prove exact-head checkout")
-
-print("PASS: Momus context workspace adoption")
+if __name__ == "__main__":
+    main()

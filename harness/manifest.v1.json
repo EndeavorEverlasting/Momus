@@ -7,16 +7,25 @@
     "docs/AI_ENGINEERING_LEDGER.md",
     "docs/CURRENT_STATE.md",
     "docs/SPRINTS.md",
+    "harness/manifest.v1.json",
     "harness/context-workspace-adoption.v1.json",
     "docs/evidence/2026-09-29-local-creator-baseline.md",
-    "creative/ai-intern/shot-001.json"
+    "creative/ai-intern/shot-001.json",
+    "harness/codebase-map.md",
+    "harness/workflows.md",
+    "harness/paths.v1.json",
+    "harness/artifacts.v1.json",
+    "harness/operator-report.md",
+    "harness/skills/creative-shot-handoff.md"
   ],
   "evidence_roots": [
     "docs/evidence"
   ],
   "validators": [
     "python scripts/validate_repo.py",
-    "python scripts/validate_context_workspace.py"
+    "python scripts/validate_context_workspace.py",
+    "python scripts/validate_governance.py --self-test",
+    "python scripts/validate_harness.py --self-test"
   ],
   "ci_workflows": [
     ".github/workflows/validate.yml"
@@ -61,7 +70,7 @@
   "implementation_boundary": {
     "momus_contains_product_source": false,
     "canonical_context_repository": "EndeavorEverlasting/Momus",
-    "canonical_implementation_repository": "EndeavorEverlasting/MomusStudio",
+    "canonical_implementation_repository": "EndeavorEverlasting/Momus",
     "adoption_manifest": "harness/context-workspace-adoption.v1.json",
     "local_checkout_name": "MomusStudiofree",
     "local_checkout_binding": "unproven",
@@ -72,7 +81,10 @@
       "branch/ref",
       "HEAD SHA",
       "dirty/untracked state"
-    ]
+    ],
+    "historical_implementation_repository": "EndeavorEverlasting/MomusStudio",
+    "product_owner_split": "SUPERSEDED",
+    "provenance_disposition": "REFERENCE_ONLY_UNMAPPED"
   },
   "public_source_references": [
     {
@@ -110,5 +122,16 @@
     ],
     "creative_package": "creative/ai-intern/shot-001.json",
     "generated_binaries_in_git": false
+  },
+  "project_identity": {
+    "canonical_name": "Momus",
+    "historical_aliases": [
+      "MomusStudio"
+    ],
+    "canonical_repository": "EndeavorEverlasting/Momus",
+    "same_intended_product": true,
+    "founder_decision": "2026-10-17",
+    "contract": "AGENTS.md",
+    "git_equivalence": "UNVERIFIED"
   }
 }

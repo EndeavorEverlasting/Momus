@@ -1,5 +1,10 @@
 # Current State
 
+## Creator identity correction (2026-10-17) — authoritative for product routing
+
+The creator confirms **Momus and MomusStudio were alternate names for the same intended product; Momus is the chosen name**. The prior context-owner/implementation-owner mapping was an engineering assumption and is **SUPERSEDED for product governance**. `AGENTS.md` is the normative contract; `harness/context-workspace-adoption.v1.json` retains the older mapping only as historical evidence. Different physical Git repositories or historic checkout commits may still exist and their exact Git relationships remain UNVERIFIED, but that does not create distinct products. Do not route new implementation to a separate app on the basis of its older name. The current harness sprint does not authorize product-code or runtime changes.
+
+
 **State ID:** `MOMUS-2026-09-29-LOCAL-CREATOR-BASELINE`  
 **Status:** `READY_FOR_LOCAL_CREATION_BASELINE`  
 **Primary lane:** immediate AI-content creation / Patrick pilot  
@@ -15,7 +20,7 @@
 - Reference floors observed on 2026-09-29 are recorded in `docs/evidence/2026-09-29-local-creator-baseline.md`.
 - The first runtime-agnostic creative package exists at `creative/ai-intern/shot-001.json`.
 - The historical `MomusStudiofree` / waoowaoo carryover remains preserved as **reference-only** evidence with status `REFERENCE_ONLY_UNMAPPED`; its unresolved provenance does not block the independent P06 local-creator lane.
-- The context-workspace adoption contract remains `harness/context-workspace-adoption.v1.json`. `EndeavorEverlasting/MomusStudio` remains the selected implementation authority for any new custom product/runtime code, while Momus owns creative/context coordination and the external local creator stack owns inference execution for P06.
+- The original context-workspace ownership split is a historical adoption record, now superseded as product routing by the creator identity correction above. Momus is the unified product; no local product/runtime implementation is proven by this correction.
 
 ## What is not yet proven
 
@@ -26,7 +31,7 @@
 - A local video generation from the first creative package.
 - The exact workflow/model/seed/output-path provenance for a successful generation.
 - Successful export and reproducibility.
-- The exact Git relationship among historical `MomusStudiofree`, public `waooAI/waoowaoo`, and any separate MomusStudio implementation repository.
+- The exact Git relationship among the historical `MomusStudiofree` checkout, public `waooAI/waoowaoo`, and Git references once named `MomusStudio`; product identity itself is creator-confirmed.
 
 ## Current decision
 
@@ -67,4 +72,4 @@ On Patrick's local machine:
 
 **Additional proven invariant:** reused S3 provider IDs cannot silently change bucket/endpoint/region; negative cases reject this configuration. The HTTP cert preserves a fingerprint of implementation/launcher inputs.\n\n**Unproven:** installation and functionality on the operator's Linux Mint PC; live Backblaze B2/R2/MinIO credentials, durability, cloud upload/retrieval, actual automatic backups, and interoperability with MomusStudio/waoowaoo. Cloud storage account creation and any spending were deliberately avoided. System interpreter local cert was proven; fresh-venv dependency download was blocked by sandbox network restrictions.
 
-**Implementation boundary:** Momus only records the contract/evidence; it must not contain MomusStudio product code. The separate implementation repository `EndeavorEverlasting/MomusStudio` is currently inaccessible through the linked GitHub account. See `docs/AI_ENGINEERING_LEDGER.md` (Media Storage Boundary) and `docs/SPRINTS.md` (P07) for acceptance and dependency-order continuation. P06 remains active and unchanged.
+**Historic implementation boundary:** The prior split between the Momus and MomusStudio names was superseded as a product distinction by the creator's 2026-10-17 decision. Any old checkout still requires Git provenance checks before import or mutation; the current harness sprint does not add product code. See `docs/AI_ENGINEERING_LEDGER.md` (Media Storage Boundary) and `docs/SPRINTS.md` (P07) for acceptance and dependency-order continuation. P06 remains active and unchanged.

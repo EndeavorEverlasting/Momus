@@ -28,7 +28,7 @@ jobs:
           python - <<'PY'
           import ast
           from pathlib import Path
-          for path in (Path('scripts/validate_repo.py'), Path('scripts/validate_context_workspace.py')):
+          for path in (Path('scripts/validate_repo.py'), Path('scripts/validate_context_workspace.py'), Path('scripts/validate_governance.py'), Path('scripts/validate_harness.py')):
               ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
               print(f'PASS: parsed {path}')
           PY
@@ -36,8 +36,10 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: "1"
         run: |
+          python scripts/validate_governance.py --self-test
           python scripts/validate_repo.py
           python scripts/validate_context_workspace.py
+          python scripts/validate_harness.py --self-test
       - name: Check repository hygiene
         run: |
           if [[ -n "${GITHUB_BASE_REF:-}" ]]; then

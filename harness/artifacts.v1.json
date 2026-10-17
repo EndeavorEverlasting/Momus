@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "canonical_repository": "EndeavorEverlasting/Momus",
+  "naming_rule": "Lowercase kebab-case descriptive paths; preserve previously established immutable evidence paths",
+  "artifacts": [
+    {
+      "id": "root_governance",
+      "path": "AGENTS.md",
+      "owner": "governance",
+      "generated_by": null,
+      "validate": "python scripts/validate_governance.py --self-test",
+      "tracked": true
+    },
+    {
+      "id": "creative_first_shot",
+      "path": "creative/ai-intern/shot-001.json",
+      "owner": "creative",
+      "generated_by": "bounded creative sprint; no automatic generator",
+      "validate": "python scripts/validate_repo.py",
+      "tracked": true
+    },
+    {
+      "id": "state_report",
+      "path": "docs/CURRENT_STATE.md",
+      "owner": "coordination",
+      "generated_by": "verified sprint handoff; human update",
+      "validate": "python scripts/validate_repo.py",
+      "tracked": true
+    },
+    {
+      "id": "harness_manifest",
+      "path": "harness/manifest.v1.json",
+      "owner": "harness",
+      "generated_by": "governed harness change; no generated source",
+      "validate": "python scripts/validate_harness.py",
+      "tracked": true
+    },
+    {
+      "id": "paths_profile",
+      "path": "harness/paths.v1.json",
+      "owner": "harness",
+      "generated_by": "workstation evidence after physical verification",
+      "validate": "python scripts/validate_harness.py",
+      "tracked": true
+    },
+    {
+      "id": "operator_report",
+      "path": "harness/operator-report.md",
+      "owner": "harness",
+      "generated_by": "verified operator-state synthesis",
+      "validate": "python scripts/validate_harness.py",
+      "tracked": true
+    }
+  ],
+  "forbidden_generated_artifacts": [
+    "secrets",
+    "credential files",
+    "model weights",
+    "image binaries",
+    "video binaries",
+    "private media"
+  ],
+  "runtime_binary_storage": "external to Git and presently not proven installed"
+}
