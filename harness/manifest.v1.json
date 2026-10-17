@@ -16,7 +16,9 @@
     "harness/paths.v1.json",
     "harness/artifacts.v1.json",
     "harness/operator-report.md",
-    "harness/skills/creative-shot-handoff.md"
+    "harness/skills/creative-shot-handoff.md",
+    "docs/UX_READINESS.md",
+    "harness/ux-readiness.v1.json"
   ],
   "evidence_roots": [
     "docs/evidence"
@@ -25,7 +27,8 @@
     "python scripts/validate_repo.py",
     "python scripts/validate_context_workspace.py",
     "python scripts/validate_governance.py --self-test",
-    "python scripts/validate_harness.py --self-test"
+    "python scripts/validate_harness.py --self-test",
+    "python scripts/validate_ux_readiness.py --self-test"
   ],
   "ci_workflows": [
     ".github/workflows/validate.yml"
@@ -65,7 +68,8 @@
     "reproducibility": "pending_P03",
     "shared_use_hardening": "pending_P04",
     "local_creator_launch": "pending_P06",
-    "first_local_generation": "pending_P06"
+    "first_local_generation": "pending_P06",
+    "creator_ux_live_cert": "NOT_CERTIFIED_pending_actual_UI_source_and_browser_device_evidence"
   },
   "implementation_boundary": {
     "momus_contains_product_source": false,
