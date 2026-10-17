@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "canonical_product": "Momus",
+  "canonical_repository": "EndeavorEverlasting/Momus",
+  "historical_product_aliases": [
+    "MomusStudio"
+  ],
+  "default_branch": "main",
+  "profile": {
+    "id": "linux-mint-primary",
+    "operator_system": "Linux Mint",
+    "development_checkout": {
+      "path": null,
+      "state": "UNKNOWN",
+      "resolution": "On the operator machine identify the existing checkout; verify pwd -P, git remote -v, git rev-parse HEAD, git status --short; never create a second mutable clone as a shortcut"
+    },
+    "production_use_path": {
+      "path": null,
+      "state": "UNKNOWN",
+      "resolution": "Identify any installed product directory or container volume and compare to development checkout before updates"
+    },
+    "temporary_worktree_root": {
+      "path": null,
+      "state": "UNKNOWN",
+      "resolution": "Select only after verifying the canonical development checkout and preserving existing dirty/unique work"
+    },
+    "operator_entrypoint": {
+      "url": null,
+      "state": "UNKNOWN",
+      "historical_reference": "http://localhost:13000",
+      "resolution": "Inspect bound services and actual browser reachability; historical screenshot alone does not prove current launch"
+    },
+    "proof": {
+      "remote_main_contains_commit": "check_per_commit",
+      "development_checkout_current": "UNKNOWN",
+      "production_use_path_current": "UNKNOWN",
+      "real_entrypoint_observed": "UNKNOWN"
+    }
+  },
+  "no_deployment_profile_reason": "No other physical machine, production environment, or deployed use path has been established in provider evidence",
+  "forbidden_assumptions": [
+    "historical localhost screenshot is a live runtime",
+    "GitHub merged means workstation updated",
+    "MomusStudio is another product"
+  ]
+}
