@@ -116,7 +116,7 @@ This ledger was codified from the Google Drive document *AI Engineering Ledger* 
 
 ### Target and decision
 
-Enable AI video assets from waoowaoo, SwarmUI/ComfyUI, CapCut and future generators to be cataloged without making Google Drive, OneDrive or any single cloud provider the system of record. Use a **local-first** content-addressed media library with a SQLite catalog and interchangeable local/S3-compatible blob adapters. Preserve the selected **provider ID**, **object key**, **SHA-256**, **project**, **source tool**, and creation metadata per asset. Provider switching must not silently relocate, delete or misroute previously stored assets.
+Enable AI video assets from waoowaoo, SwarmUI/ComfyUI, CapCut and future generators to be cataloged without making Google Drive, OneDrive or any single cloud provider the system of record. Use a **local-first** content-addressed media library with a SQLite catalog and interchangeable local/S3-compatible blob adapters. Preserve the selected **provider ID**, **object key**, **SHA-256**, **project**, **source tool**, and creation metadata per asset. Provider switching must not silently relocate, delete or misroute previously stored assets. Every S3 destination requires a **stable unique provider ID** with a persisted nonsecret bucket/region/endpoint fingerprint; reusing that identity for a different destination must fail closed.
 
 A single primary storage provider is selected explicitly. Backblaze B2, Cloudflare R2 and MinIO are candidates behind an S3-compatible API, not claimed tested environments. rclone remains a possible migration/transfer tool and Kopia a proposed independent backup tool; neither is auto-wired. No paid storage transaction or live cloud operation may occur by default.
 
@@ -127,9 +127,9 @@ One P82-style thesis was selected: a small protocol with `put` and `fetch`, plus
 - **Baseline/comparator:** file-only workflow and existing private MinIO application boundary, with no verified cross-tool catalog. The local adapter and instrumented fake S3 adapter exercise the same byte-integrity contract.
 - **Boundary:** isolated standalone Git project, no existing Docker/MinIO/MySQL mutation or provider credentials.
 - **Acceptance:** real HTTP upload/download of identical bytes, accurate SHA-256, persistence after server restart, explicit provider routing, corruption rejection, traversal protection, and no implicit remote calls.
-- **Observed evidence in the build environment:** 20 pytest checks PASS, 8 localhost HTTP live-cert checks PASS. A Chromium render of served HTML was inspected via offline rendering. The empty-venv package-install step was BLOCKED by sandbox DNS/network restrictions, but a system-interpreter installation with already-installed dependencies ran successfully.
+- **Observed evidence in the build environment:** 23 pytest checks PASS, 8 localhost HTTP live-cert checks PASS (final local revision). The negative controls include corrupt deduplicated originals, missing blobs, and cloud ID/bucket/endpoint changes; web module import does not eagerly modify the operator's library. A Chromium render of served HTML was inspected via offline rendering. The empty-venv package-install step was BLOCKED by sandbox DNS/network restrictions, but a system-interpreter installation with already-installed dependencies ran successfully.
 - **Result:** KEEP the bounded prototype and its tested local/S3-adapter interface; DO NOT promote it to integrated MomusStudio or cloud-certified.
-- **Prototype Git commit (isolated, not pushed):** `8e609f7` in the downloadable `MomusMediaBridge` repository artifact. The SHA identifies the local content only; it is not a GitHub commit in Momus or MomusStudio.
+- **Prototype Git commit (isolated, not pushed):** `269b1ee417546c7d94cee56f05a54f654d0223df` in the downloadable `MomusMediaBridge` repository artifact, with `8e609f7` preserved as the first functional prototype checkpoint. The SHA identifies the local content only; it is not a GitHub commit in Momus or MomusStudio.
 
 ### Dependency-ordered continuation and contracts
 
