@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "product": "Momus",
+  "contract_name": "Creator-first live UX certification",
+  "proof_state": "NOT_CERTIFIED",
+  "candidate_source": "UNRESOLVED_LOCAL_UI",
+  "supported_mode_policy": {
+    "desktop": "required",
+    "phone_touch": "explicit_candidate_decision_required",
+    "phone_orientations": "portrait_and_landscape_if_supported"
+  },
+  "cases": [
+    {"id": "desktop_creator_journey", "mode": "desktop_pointer", "description": "New project to 9:16 storyboard, one real generation, inspect result and export without technical configuration jargon", "required": true},
+    {"id": "desktop_constrained_geometry", "mode": "desktop_pointer", "description": "At 1024x768, primary action, preview, navigation and dialogs remain visible and reachable with realistic text", "required": true},
+    {"id": "keyboard_terminal_actions", "mode": "desktop_keyboard", "description": "Complete core journey without pointer; visible focus, correct dialog and Escape semantics, no duplicate action", "required": true},
+    {"id": "firefox_browser_parity", "mode": "desktop_keyboard", "description": "Same essential actions in Firefox without layout or focus regression", "required": true},
+    {"id": "state_failure_recovery", "mode": "desktop_pointer", "description": "Loading, empty, queued, failed generation, retry, success and cancel show truthful recoverable status", "required": true},
+    {"id": "persistence_and_no_loss", "mode": "desktop_pointer", "description": "Edits and selected project survive safe route change and reload; recovery from interrupted generation does not lose draft", "required": true},
+    {"id": "accessibility_motion", "mode": "desktop_keyboard", "description": "Semantic controls, label/error announcements, readable contrast, reduced-motion behavior and visible focus pass", "required": true},
+    {"id": "phone_portrait_touch", "mode": "phone_touch", "description": "Tap targets and action completion in mobile portrait; no hidden critical action or accidental keyboard focus", "required": false},
+    {"id": "phone_orientation_cycle", "mode": "phone_touch", "description": "Portrait to landscape to portrait without reset; preview, dialogs, state and actions remain accessible", "required": false}
+  ],
+  "release_blockers": [
+    "unidentified_application_source_or_runtime",
+    "missing_real_browser_execution",
+    "missing_generation_and_export_proof",
+    "unresolved_supported_phone_policy",
+    "known_severity_one_or_two_ux_defects"
+  ],
+  "evidence_schema": "Each case needs pass status, real browser/device observation, named evidence artifact and exact candidate identity; structured receipts alone cannot prove browser behavior."
+}
