@@ -109,3 +109,34 @@ The next operator should open the local app, authenticate with the existing test
 ## Provenance
 
 This ledger was codified from the Google Drive document *AI Engineering Ledger* dated 2026-08-23. The source document contained placeholder template text in Overview, Goals, Specifications, and a secondary section; those placeholders were intentionally replaced with source-grounded engineering content. Its embedded screenshots supply the carryover details summarized above. See `docs/evidence/2026-08-23-momusstudiofree-carryover.md` for the extracted evidence record.
+
+## Media Storage Boundary — October 2026
+
+**Status:** an isolated functional prototype exists outside this repository; neither MomusStudio integration nor remote-cloud certification is proven. Momus continues to own creative intent, storage architecture decisions, and evidence. The separate `EndeavorEverlasting/MomusStudio` implementation owner is inaccessible to the current GitHub connection. Do not copy prototype code into Momus to work around that boundary.
+
+### Target and decision
+
+Enable AI video assets from waoowaoo, SwarmUI/ComfyUI, CapCut and future generators to be cataloged without making Google Drive, OneDrive or any single cloud provider the system of record. Use a **local-first** content-addressed media library with a SQLite catalog and interchangeable local/S3-compatible blob adapters. Preserve the selected **provider ID**, **object key**, **SHA-256**, **project**, **source tool**, and creation metadata per asset. Provider switching must not silently relocate, delete or misroute previously stored assets.
+
+A single primary storage provider is selected explicitly. Backblaze B2, Cloudflare R2 and MinIO are candidates behind an S3-compatible API, not claimed tested environments. rclone remains a possible migration/transfer tool and Kopia a proposed independent backup tool; neither is auto-wired. No paid storage transaction or live cloud operation may occur by default.
+
+### Bounded prototype and empirical decision
+
+One P82-style thesis was selected: a small protocol with `put` and `fetch`, plus content addressing and durable provider metadata, is sufficient for exact binary round-tripping without binding the creative workflows to a specific storage vendor.
+
+- **Baseline/comparator:** file-only workflow and existing private MinIO application boundary, with no verified cross-tool catalog. The local adapter and instrumented fake S3 adapter exercise the same byte-integrity contract.
+- **Boundary:** isolated standalone Git project, no existing Docker/MinIO/MySQL mutation or provider credentials.
+- **Acceptance:** real HTTP upload/download of identical bytes, accurate SHA-256, persistence after server restart, explicit provider routing, corruption rejection, traversal protection, and no implicit remote calls.
+- **Observed evidence in the build environment:** 20 pytest checks PASS, 8 localhost HTTP live-cert checks PASS. A Chromium render of served HTML was inspected via offline rendering. The empty-venv package-install step was BLOCKED by sandbox DNS/network restrictions, but a system-interpreter installation with already-installed dependencies ran successfully.
+- **Result:** KEEP the bounded prototype and its tested local/S3-adapter interface; DO NOT promote it to integrated MomusStudio or cloud-certified.
+- **Prototype Git commit (isolated, not pushed):** `8e609f7` in the downloadable `MomusMediaBridge` repository artifact. The SHA identifies the local content only; it is not a GitHub commit in Momus or MomusStudio.
+
+### Dependency-ordered continuation and contracts
+
+1. **Local prototype (VALIDATED locally):** Git archive and launcher `scripts/launch.sh`; certification `scripts/certify.sh` in the standalone implementation artifact. Local-only and isolated; preserve this known-good floor.
+2. **MomusStudio implementation reconciliation (BLOCKED):** regain access to `EndeavorEverlasting/MomusStudio`, resolve the old `MomusStudiofree` checkout path/remotes/HEAD/dirty status, locate existing MinIO/catalog conventions. Owner: MomusStudio implementation maintainer. Gate: authoritative source identity and verified non-destructive integration location.
+3. **Provider integration (REQUIRED SUCCESSOR WORK):** test a NEW private B2/R2/MinIO bucket using explicit credentials in the operator's workstation secret store, with provider-specific read-after-write, integrity and cost checks; do not assume S3 compatibility alone is proof. Owner: storage integration lane. Gate: evidence receipt for each selected provider.
+4. **Recovery and security (REQUIRED SUCCESSOR WORK):** add a tested SQLite-plus-blob consistent backup/restore mechanism, offsite encrypted copy, storage migration dry-run, authentication and operational limits before any shared-network deployment. Owner: MomusStudio implementation. Gate: destructive and corruption cases, restore receipt, and no exposed unauthenticated service.
+5. **Live operator acceptance (BLOCKED on workstation):** certify actual Linux Mint environment, browse/upload/download, record exact installation/runtime/sha and browser output; only then consider the deployed/observed states.
+
+**Forbidden:** credentials, videos, model weights or giant blobs in Git; implicit migration/deletion; public network exposure; assuming local fake S3 tests imply real cloud certification; pretending the P06 creator flow is already functioning.
