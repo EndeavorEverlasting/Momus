@@ -71,3 +71,13 @@ Each sprint is intentionally small enough that a fresh agent can execute it with
 **Expected artifacts:** pinned external-reference evidence; `creative/ai-intern/shot-001.json`; local runtime launch proof; one representative generated shot; runtime/workflow/model/seed/output-path/audio provenance.  
 **Acceptance:** Momus contains the first creative package and evidence-backed runtime baseline; local creator UI launches; exactly one representative shot is generated from the package; provenance is captured; no secret or generated binary is committed.  
 **Status:** active — coordination artifacts are established on the P06 branch; local runtime/generation proof remains pending.
+
+## P07 — Media Storage Boundary Prototype and Reconciliation
+
+**Lane:** provider-agnostic media infrastructure / separate implementation owner
+**Owned scope:** preserve the reusable storage contract and local proof, record implementation ownership and the concrete integration dependencies; do not put app runtime source inside Momus.
+**Forbidden scope:** changing the existing MomusStudiofree/waoowaoo checkout or volumes; committing generated media or credentials; purchasing cloud services; promoting local protocol tests to field certification.
+**Expected artifacts:** a standalone local Git repository/archive with upload/catalog/download UI and local/S3 adapters, focused tests and an isolated localhost live-cert receipt; Momus planning/evidence updates; a later canonical MomusStudio implementation revision when access is restored.
+**Proof:** standalone `MomusMediaBridge` local commit `8e609f7` (not in Momus) had 20 focused pytest passes and 8 real HTTP cert passes. Package installation in fresh venv could not be tested here due external DNS/network restrictions. S3 was only fake-client tested. No cloud credentials used. No MomusStudio workstation evidence.
+**Status:** **local functional prototype VALIDATED; canonical product integration BLOCKED** (implementation repo is unavailable through this GitHub connection). Keep P06 as Momus's active sprint; P07 is a parallel documented boundary and does not claim P06 or the historical P01 are complete.
+**First successor action:** implementation owner restores access and verifies the actual MomusStudio checkout/remotes and storage schema before performing a non-destructive adapter integration and real provider certification.
