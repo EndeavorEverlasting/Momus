@@ -1,7 +1,7 @@
 # Momus Creator UX Readiness — Pre-Live-Cert Contract
 
-**Status:** PROVISIONAL DESIGN + STRUCTURAL GATE; **LIVE UX NOT CERTIFIED**  
-**Evidence floor:** `EndeavorEverlasting/Momus` main `b6149a50b999f490c4d5b9ba5c6da63ed54990f5`, inspected 2026-10-17.  
+**Status:** PROVISIONAL DESIGN + STRUCTURAL GATE; **LIVE UX NOT CERTIFIED**
+**Evidence floor:** `EndeavorEverlasting/Momus` main `b6149a50b999f490c4d5b9ba5c6da63ed54990f5`, inspected 2026-10-17.
 **Identity:** Momus = MomusStudio, alternate names for the same intended product; no independent product assignment. Physical Git provenance for older source remains unverified.
 
 ## Sprint declaration: P08 — Creator Interface Readiness
@@ -15,7 +15,7 @@
 
 ## Audience and design goal
 
-**Primary:** a first-time, nontechnical creator who wants to make an AI video without seeing graphs, ports, providers, tokens, node parameters or command lines.  
+**Primary:** a first-time, nontechnical creator who wants to make an AI video without seeing graphs, ports, providers, tokens, node parameters or command lines.
 **Secondary:** an advanced creator/operator who needs control of reproducible workflows, model/runtime settings and provenance.
 
 **One first-use journey:** open Momus -> start a project -> write the premise -> see editable shot cards/storyboard -> set a 9:16 preview -> choose/generate **one** representative shot -> see genuine queue/progress/error state -> review video and audio -> deliberately revise or export -> reopen without losing the work. Use the existing `creative/ai-intern/shot-001.json` as the initial realistic fixture; *do not fake a generation response*.
