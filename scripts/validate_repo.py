@@ -7,6 +7,8 @@ import json
 import sys
 from pathlib import Path
 
+from validate_governance import validate_contract
+
 ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED_FILES = [
@@ -66,6 +68,13 @@ def fail(message: str) -> None:
 
 
 def main() -> int:
+    governance = ROOT / "AGENTS.md"
+    if not governance.is_file():
+        fail("missing canonical AGENTS.md governance")
+    errors = validate_contract(governance.read_text(encoding="utf-8"))
+    for error in errors:
+        fail(f"governance contract violation: {error}")
+
     for rel in REQUIRED_FILES:
         if not (ROOT / rel).is_file():
             fail(f"missing required file: {rel}")
