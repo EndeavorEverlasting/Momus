@@ -1,5 +1,7 @@
 # Momus
 
+**Canonical product and repository:** `EndeavorEverlasting/Momus`. `MomusStudio` was an alternate name for this same product; the separate `EndeavorEverlasting/MomusStudio` repository is retired from development. Agents must not route implementation or any new work there. See [AGENTS.md](AGENTS.md) for the founder-authoritative rule and [docs/CURRENT_STATE.md](docs/CURRENT_STATE.md) for active work. Historical local `MomusStudiofree` provenance remains independently unverified.
+
 Momus is the creative-content and coordination repository for the AI-video program.
 
 Momus manages **creative intent**: projects, shot packages, prompts, references, acceptance criteria, and returned generation provenance. It intentionally does **not** implement the image/video inference engine.
