@@ -64,6 +64,21 @@ def main() -> None:
             == "EndeavorEverlasting/Momus", "stale implementation routing")
     require(manifest["implementation_boundary"]["product_owner_split"] == "SUPERSEDED",
             "historic owner split reactivated")
+    retirement = manifest["implementation_boundary"]
+    require(retirement["historical_implementation_repository"] == "EndeavorEverlasting/MomusStudio",
+            "retired alias changed unexpectedly")
+    require(retirement["historical_implementation_repository_disposition"] in (
+        "RETIRED_ALIAS_ARCHIVE_PENDING", "RETIRED_ALIAS_ARCHIVED",
+    ), "retired alias was accidentally reactivated")
+    receipt = "docs/evidence/2026-10-17-momusstudio-deprecation.md"
+    require(retirement["historical_implementation_repository_retirement_evidence"] == receipt,
+            "retirement evidence pointer missing or inconsistent")
+    require(receipt in manifest["entrypoints"], "retirement evidence must be indexed")
+    evidence = read(receipt)
+    require("Only" in evidence or "**Only**" in evidence, "canonical routing evidence absent")
+    require("GitHub archive: pending" in evidence or "RETIRED_ALIAS_ARCHIVED" in evidence,
+            "retirement receipt lost its archive gate")
+
     require("harness/context-workspace-adoption.v1.json" in manifest["entrypoints"],
             "context adoption not indexed")
     require("python scripts/validate_context_workspace.py" in manifest["validators"],
