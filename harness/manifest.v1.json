@@ -90,8 +90,16 @@
     "historical_implementation_repository": "EndeavorEverlasting/MomusStudio",
     "product_owner_split": "SUPERSEDED",
     "provenance_disposition": "REFERENCE_ONLY_UNMAPPED",
-    "historical_implementation_repository_disposition": "RETIRED_ALIAS_ARCHIVE_PENDING",
-    "historical_implementation_repository_retirement_evidence": "docs/evidence/2026-10-17-momusstudio-deprecation.md"
+    "historical_implementation_repository_disposition": "RETIRED_ALIAS_ARCHIVED",
+    "historical_implementation_repository_retirement_evidence": "docs/evidence/2026-10-17-momusstudio-deprecation.md",
+    "historical_implementation_repository_archive_verification": {
+      "provider": "GitHub",
+      "repository": "EndeavorEverlasting/MomusStudio",
+      "archived": true,
+      "verified_on": "2026-10-19",
+      "method": "GitHub connected get_repo metadata archived=true; operator screenshot confirms owner archived repository on 2026-10-19",
+      "canonical_evidence": "docs/evidence/2026-10-17-momusstudio-deprecation.md"
+    }
   },
   "public_source_references": [
     {
