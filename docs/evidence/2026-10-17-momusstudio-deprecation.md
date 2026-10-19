@@ -22,16 +22,16 @@ The creator confirms that `MomusStudio` was an accidental duplicate repository f
 
 ## Retirement versus archival
 
-Current machine-readable state: `RETIRED_ALIAS_ARCHIVE_PENDING`.
+Historical pre-archive state on 2026-10-17: `RETIRED_ALIAS_ARCHIVE_PENDING`. **Current verified state on 2026-10-19: `RETIRED_ALIAS_ARCHIVED`.**
 
-**Not yet performed:** GitHub's native **Archive this repository** admin action. The current connected GitHub interface exposes read/write content and PR APIs but **does not expose the archive-admin mutation**. The deprecated repository remains writable until archive is performed through a trusted admin UI/API with appropriate authority. This is a genuine external-action blocker, not a reason to resurrect work under this remote.
+**Completed October 19, 2026:** The operator archived the repository using GitHub's native admin UI. GitHub displayed a success message that the repository was archived by its owner on October 19, 2026 and is read-only. An independent connected GitHub `get_repo` read on 2026-10-19 returned `archived=true` for the exact repository `EndeavorEverlasting/MomusStudio`. GitHub's archive action was performed by the owner, not by this agent.
 
-After GitHub owner archival: verify `archived=true` from GitHub provider metadata, update the canonical `harness/manifest.v1.json` state to `RETIRED_ALIAS_ARCHIVED`, and record exact evidence/date. Do not delete repository history. Do not remove historical aliases from evidence. Any local `MomusStudiofree` working tree must be inventoried (path, origin/remotes, branch, HEAD SHA, dirty/untracked work) before any separately justified relocation or retirement.
+Post-archive canonical closeout: GitHub provider metadata verified `archived=true`; canonical `harness/manifest.v1.json` is now marked `RETIRED_ALIAS_ARCHIVED` with verification date and method. Do not delete Git history or erase the historical aliases from evidence. Any local `MomusStudiofree` working tree remains separately `REFERENCE_ONLY_UNMAPPED` and requires its own provenance inventory (path, origin/remotes, branch, HEAD SHA and dirty/untracked state) before any relocation or retirement.
 
 ## Acceptance and proof ceiling
 
-Remote routing: committed in both repositories and fleet inventory. Historical PR: closed. Local Windows fleet runtime: untested. GitHub Actions runner status: unresolved independent limitation. **GitHub archive: pending**. Local historical checkout relation: unverified. No repository deletion, force-push, checkout reset, runtime migration, or media/secret transfer was performed.
+Remote routing: committed in both repositories and fleet inventory. Historical PR: closed. Local Windows fleet runtime: untested. GitHub Actions runner status: unresolved independent limitation. **GitHub archive: verified complete 2026-10-19 (`archived=true` confirmed via GitHub).** Local historical checkout relation: unverified. No repository deletion, force-push, checkout reset, runtime migration, or media/secret transfer was performed.
 
-## One owner-only action remaining
+## Owner action completed — 2026-10-19
 
-Open `https://github.com/EndeavorEverlasting/MomusStudio/settings` and choose **General > Danger Zone > Archive this repository**, then confirm; GitHub owner must perform it unless an authorized archive-capable interface becomes available. Verify the archive flag before marking the canonical receipt complete.
+The owner confirmed GitHub's **Archive this repository** action. The screenshot shows a successful archive banner and read-only notice dated October 19, 2026. The subsequent connected GitHub repository metadata independently confirmed `archived=true`. No further operator action is needed for the **remote duplicate retirement**. The active Momus project proceeds separately on its existing roadmap.

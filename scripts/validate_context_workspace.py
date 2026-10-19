@@ -76,8 +76,23 @@ def main() -> None:
     require(receipt in manifest["entrypoints"], "retirement evidence must be indexed")
     evidence = read(receipt)
     require("Only" in evidence or "**Only**" in evidence, "canonical routing evidence absent")
-    require("GitHub archive: pending" in evidence or "RETIRED_ALIAS_ARCHIVED" in evidence,
-            "retirement receipt lost its archive gate")
+    status = retirement["historical_implementation_repository_disposition"]
+    if status == "RETIRED_ALIAS_ARCHIVED":
+        verify = retirement.get("historical_implementation_repository_archive_verification", {})
+        require(verify.get("provider") == "GitHub", "archive provider missing")
+        require(verify.get("repository") == "EndeavorEverlasting/MomusStudio",
+                "archive verification points to wrong repository")
+        require(verify.get("archived") is True, "archive metadata verification missing")
+        require(verify.get("verified_on") == "2026-10-19", "archive date not recorded")
+        require("GitHub" in verify.get("method", "") and "archived=true" in verify.get("method", ""),
+                "archive verification method lacks independent provider proof")
+        require(verify.get("canonical_evidence") == receipt, "archive evidence not canonical")
+        require("GitHub archive: verified complete 2026-10-19" in evidence,
+                "verified archive status missing from receipt")
+        require("connected GitHub" in evidence and "archived=true" in evidence,
+                "independent provider confirmation missing from receipt")
+    else:
+        require("GitHub archive: pending" in evidence, "pre-archive state lacks pending evidence")
 
     require("harness/context-workspace-adoption.v1.json" in manifest["entrypoints"],
             "context adoption not indexed")

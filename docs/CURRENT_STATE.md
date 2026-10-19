@@ -2,7 +2,7 @@
 
 ## MomusStudio repository retirement — active governance
 
-**Canonical target:** `EndeavorEverlasting/Momus`. **Deprecated GitHub repository:** `EndeavorEverlasting/MomusStudio`. Remote routing redirects and obsolete PR closure have been committed; the shared Entire inventory `RETIRED_ALIAS` exception is merged. As of the last direct provider read on 2026-10-17, **GitHub archival is still pending**; no archive-capable GitHub admin action is available through the current connection. Do not use the duplicate for new issues, source code, PRs or agent ownership. See `docs/evidence/2026-10-17-momusstudio-deprecation.md` for exact evidence, scope and the one remaining archive-admin action. Historical `MomusStudiofree` / waoowaoo local source remains `REFERENCE_ONLY_UNMAPPED`.
+**Canonical target:** `EndeavorEverlasting/Momus`. **Retired GitHub repository:** `EndeavorEverlasting/MomusStudio` (**ARCHIVED / READ-ONLY**). The owner archived it on **2026-10-19**, confirmed both by GitHub's UI and independent connected GitHub repository metadata (`archived=true`). Remote redirect/agent stop rules and obsolete PR closure are committed; the shared Entire inventory marks the duplicate `RETIRED_ALIAS` and skips local checkout probing. Canonical machine-readable state: **`RETIRED_ALIAS_ARCHIVED`**. Never route new issues, code, PRs, automation, or agents to the retired repository. See `docs/evidence/2026-10-17-momusstudio-deprecation.md` for the full archive verification and historical provenance limit. Historical local `MomusStudiofree` / waoowaoo source remains **separately** `REFERENCE_ONLY_UNMAPPED`.
 
 ## Creator identity correction (2026-10-17) — authoritative for product routing
 
